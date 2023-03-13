@@ -5,21 +5,7 @@
     url("https://manzdev.github.io/twitch-gameboy-css/fonts/pretendo.ttf") format("truetype");
 }
 
-table{
-  border-spacing: 1ch;
-  //font-size: xx-large;
-  width: 100%;
-  padding-top: 5%;
-  text-align: center;
-  //min-height: auto;
-}
-tr:hover{
-  //border: 10%;
-  text-decoration: underline;
-  cursor: pointer;
-  //text-align: center;
 
-}
 
 .pc_seablue{
   //display: flex;
@@ -90,10 +76,12 @@ body {
 	width: 80%;
 	/*min-height : 100%;*/
 	margin: auto;
+  align-items: center;
+
 }
 
 p{
-	text-align: justify;
+	//text-align: justify;
 }
 
 .text-danger {
@@ -230,7 +218,7 @@ a:hover {
 	-webkit-text-fill-color: transparent;
 }
 
-img{
+.img_base{
 	display: block;
 	width: 100%;
 	border-radius: 10px;

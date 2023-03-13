@@ -1,0 +1,22 @@
+table{
+  border-spacing: 1ch;
+  //font-size: xx-large;
+  width: 100%;
+  padding-top: 5%;
+  text-align: center;
+  //min-height: auto;
+}
+tr:hover{
+  //border: 10%;
+  text-decoration: underline;
+  cursor: pointer;
+  //text-align: center;
+
+}
+
+
+.poke-container{
+  display: flex;
+  //justify-content: space-between
+
+}

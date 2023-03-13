@@ -24,7 +24,6 @@
     <td><a (click)="submitStarter(2)">{{starterItemList[2].name}}</a><app-pokemon-card [pokemon]="starterItemList[2]"></app-pokemon-card></td>
   </form>
   <div *ngIf="!starterIsVisible && !formIsVisible">
-    <p>{{starter.name}}</p>
     <app-pokemon-card [pokemon]="starter"></app-pokemon-card>
   </div>
 

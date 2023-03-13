@@ -1,15 +1,11 @@
-<div class="container2">
-  <fieldset>
-    <legend> {{ pokemon.name }} </legend>
-    <table>
-      <tr>
-        <td>order : </td>
-        <td>{{ pokemon.order }}</td>
-      </tr>
-      <tr>
-        <td>url : </td>
-        <td>{{ pokemon.url }}</td>
-      </tr>
-    </table>
-  </fieldset>
+<div class="poke-card">
+  <div class="container" style="text-align: center;">
+    <p>{{ pokemon.order }}</p>
+    <div style="text-align: center;">
+      <img [src]="pokemon.url" style="height: 128px; width: 128px;">
+    </div>
+    <p>{{ pokemon.name }}</p>
+
+  </div>
 </div>
+

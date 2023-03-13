@@ -4,19 +4,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainMenuComponent } from './modules/menu/main-menu/main-menu.component';
-import { MenuModule } from './modules/menu/menu.module';
-import { PokemonCardComponent } from './shared/component/pokemon-card/pokemon-card.component';
+import { ModulesModule } from './shared/modules/modules.module';
 
 @NgModule({
   declarations: [
     AppComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MenuModule,
-    HttpClientModule
+    ModulesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

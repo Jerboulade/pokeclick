@@ -7,20 +7,20 @@ import { NewGameComponent } from './new-game/new-game.component';
 import { LoadGameComponent } from './load-game/load-game.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
-import { PokemonCardComponent } from 'src/app/shared/component/pokemon-card/pokemon-card.component';
+import { ModulesModule } from 'src/app/shared/modules/modules.module';
 
 
 @NgModule({
   declarations: [
     MainMenuComponent,
     NewGameComponent,
-    LoadGameComponent,
-    PokemonCardComponent
+    LoadGameComponent
   ],
   imports: [
     CommonModule,
     MenuRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModulesModule
   ],
   providers: [
     PokeService
