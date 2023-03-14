@@ -8,13 +8,15 @@ import { LoadGameComponent } from './load-game/load-game.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
 import { ModulesModule } from 'src/app/shared/modules/modules.module';
+import { ClickerComponent } from './clicker/clicker.component';
 
 
 @NgModule({
   declarations: [
     MainMenuComponent,
     NewGameComponent,
-    LoadGameComponent
+    LoadGameComponent,
+    ClickerComponent
   ],
   imports: [
     CommonModule,
