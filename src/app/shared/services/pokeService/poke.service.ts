@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { pokeListItem } from '../../models/pokeListItem';
 import { pokemonForm } from '../../models/pokemonForm';
 import { pokemonDTO } from '../../models/pokemonDTO';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class PokeService{
   private pokeURL : string = "https://pokeapi.co/api/v2/"
   private pokeList : pokeListItem[] = [];
   private pokedex : pokemonDTO[] = []
+  private errorMessage! : string;
 
   constructor(private _http : HttpClient, private _serv : MemoryCardService) {
     console.log("init pokeservice");
@@ -47,19 +49,13 @@ export class PokeService{
     return this.pokeList.find(item => item.order == order);
   }
 
-  getPokemonDTOByOrder(order : number) : pokemonDTO | undefined {
+  getPokemonDTOByOrder(order : number) : pokemonDTO | Observable<pokemonDTO> | undefined {
     if ( order <= 0 || order > 1010)
       return ;
     let pokemon : pokemonDTO | undefined = this.pokedex.find( pk => pk.order == order );
-    if (!pokemon){
-      this._http.get<pokemonDTO>(this.pokeURL + "pokemon/" + order).subscribe({
-        next : (data) => {
-          this.pokedex.push(data);
-          pokemon = data;
-          console.log("GET " + pokemon.name);
-        }
-      });
-    }
+    if (!pokemon)
+      return this._http.get<pokemonDTO>(this.pokeURL + "pokemon/" + order)
+    console.log(pokemon);
     return (pokemon);
   }
 
