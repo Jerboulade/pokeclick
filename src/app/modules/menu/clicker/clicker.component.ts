@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, RendererFactory2 } from '@angular/core';
 import { pokemonDTO } from 'src/app/shared/models/pokemonDTO';
 import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
 
@@ -14,10 +14,13 @@ export class ClickerComponent implements OnInit{
   enemy! : pokemonDTO;
   timer : any;
   errorMessage! : string;
+  popup : boolean = false;
+  renderer! : Renderer2;
 
 
-  constructor(private _pokeService : PokeService) {
-    this._pokeService.getPokemonDTOByOrder(1)?.subscribe({
+
+  constructor(private _pokeService : PokeService, private _rendererFactory : RendererFactory2) {
+    this._pokeService.getPokemonDTOByOrder(256)?.subscribe({
       next : (data : pokemonDTO) => {
         this.enemy = data;
         console.log("GET " + this.enemy.name);
@@ -55,6 +58,39 @@ export class ClickerComponent implements OnInit{
       }
     }
   }
+
+  onMouseClick(e: MouseEvent) {
+    console.log(e);
+
+    const popupHeight = 400, // hardcode these values
+      popupWidth = 300;    // or compute them dynamically
+
+    let popupXPosition,
+        popupYPosition
+
+    if(e.clientX + popupWidth > window.innerWidth){
+        popupXPosition = e.pageX - popupWidth;
+    }else{
+        popupXPosition = e.pageX;
+    }
+
+    if(e.clientY + popupHeight > window.innerHeight){
+        popupYPosition = e.pageY - popupHeight;
+    }else{
+        popupYPosition = e.pageY;
+    }
+    console.log(popupHeight)
+    console.log(popupWidth)
+    console.log(popupXPosition)
+    console.log(popupYPosition)
+      this.popup = true;
+
+      this.renderer = this._rendererFactory.createRenderer(null, null);
+      let div = this.renderer.createElement("div");
+      //console.log(document.getElementById('life-container'))
+      this.renderer.addClass(div, "popup");
+      this.renderer.appendChild(document.getElementsByClassName('life-container'), div);
+    }
 
   startGame() {
     this.gameStarted = true;
