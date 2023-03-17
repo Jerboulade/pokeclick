@@ -18,8 +18,6 @@ export class ClickerComponent implements OnInit{
   popup : boolean = false;
   renderer! : Renderer2;
 
-  decrementValue! : number;
-
   @ViewChild('popContainer', { read: ViewContainerRef })
   popContainer! : ViewContainerRef;
 
@@ -66,8 +64,12 @@ export class ClickerComponent implements OnInit{
  onPokemonClick(event: MouseEvent){
   const popComponentFactory = this._componentFactoryResolver.resolveComponentFactory(PopComponent);
   const popRef = this.popContainer.createComponent(popComponentFactory);
-  popRef.location.nativeElement.style.left = '${event.clientX}px';
-  popRef.location.nativeElement.style.top = '${event.clientY}px';
+  popRef.instance.decrementValue = 1;
+  popRef.location.nativeElement.style.position = 'absolute';
+  popRef.location.nativeElement.style.left = event.clientX + 'px';
+  popRef.location.nativeElement.style.top = event.clientY + 'px';
+
+  console.log('${event.clientY}px')
   setTimeout(() => {
     popRef.destroy();
   }, 1000);

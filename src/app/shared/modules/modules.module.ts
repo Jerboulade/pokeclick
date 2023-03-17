@@ -12,7 +12,8 @@ import { PokemonCardComponent } from '../component/pokemon-card/pokemon-card.com
     CommonModule,
   ],
   exports : [
-    HttpClientModule, PokemonCardComponent
+    HttpClientModule,
+    PokemonCardComponent
   ]
 })
 export class ModulesModule { }
