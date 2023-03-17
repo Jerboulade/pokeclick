@@ -1,11 +1,12 @@
-import { Component, OnInit, Renderer2, RendererFactory2 } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, Renderer2, RendererFactory2, ViewChild, ViewContainerRef } from '@angular/core';
 import { pokemonDTO } from 'src/app/shared/models/pokemonDTO';
 import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
+import { PopComponent } from './pop/pop/pop.component';
 
 @Component({
   selector: 'app-clicker',
   templateUrl: './clicker.component.html',
-  styleUrls: ['./clicker.component.scss']
+  styleUrls: ['./clicker.component.scss'],
 })
 export class ClickerComponent implements OnInit{
   pokemonLife! : number;
@@ -17,9 +18,12 @@ export class ClickerComponent implements OnInit{
   popup : boolean = false;
   renderer! : Renderer2;
 
+  decrementValue! : number;
 
+  @ViewChild('popContainer', { read: ViewContainerRef })
+  popContainer! : ViewContainerRef;
 
-  constructor(private _pokeService : PokeService, private _rendererFactory : RendererFactory2) {
+  constructor(private _pokeService : PokeService, private _rendererFactory : RendererFactory2, private _componentFactoryResolver : ComponentFactoryResolver) {
     this._pokeService.getPokemonDTOByOrder(256)?.subscribe({
       next : (data : pokemonDTO) => {
         this.enemy = data;
@@ -58,6 +62,17 @@ export class ClickerComponent implements OnInit{
       }
     }
   }
+
+ onPokemonClick(event: MouseEvent){
+  const popComponentFactory = this._componentFactoryResolver.resolveComponentFactory(PopComponent);
+  const popRef = this.popContainer.createComponent(popComponentFactory);
+  popRef.location.nativeElement.style.left = '${event.clientX}px';
+  popRef.location.nativeElement.style.top = '${event.clientY}px';
+  setTimeout(() => {
+    popRef.destroy();
+  }, 1000);
+
+ }
 
   onMouseClick(e: MouseEvent) {
     console.log(e);

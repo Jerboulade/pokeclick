@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
 import { ModulesModule } from 'src/app/shared/modules/modules.module';
 import { ClickerComponent } from './clicker/clicker.component';
+import { PopComponent } from './clicker/pop/pop/pop.component';
 
 
 @NgModule({
@@ -16,13 +17,14 @@ import { ClickerComponent } from './clicker/clicker.component';
     MainMenuComponent,
     NewGameComponent,
     LoadGameComponent,
-    ClickerComponent
+    ClickerComponent,
+    PopComponent
   ],
   imports: [
     CommonModule,
     MenuRoutingModule,
     ReactiveFormsModule,
-    ModulesModule
+    ModulesModule,
   ],
   providers: [
     PokeService

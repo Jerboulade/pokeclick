@@ -1,8 +1,10 @@
   <div class="pokemon-container">
 
+    <div #popContainer></div>
+
     <div class="item">
       <div class="item-item">
-        <img *ngIf="enemy" class="pokemon-container-img" [src]="enemy.sprites.front_default" (click)="onMouseClick($event)"  (click)="decrementLife()" [class.disabled]="pokemonLife === 0 || !gameStarted">
+        <img *ngIf="enemy" class="pokemon-container-img" [src]="enemy.sprites.front_default" (click)="onPokemonClick($event)"  (click)="decrementLife()" [class.disabled]="pokemonLife === 0 || !gameStarted">
       </div>
       <div class="item-item">
         <div class="life-container">
