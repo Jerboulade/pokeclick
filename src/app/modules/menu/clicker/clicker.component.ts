@@ -61,53 +61,19 @@ export class ClickerComponent implements OnInit{
     }
   }
 
- onPokemonClick(event: MouseEvent){
-  const popComponentFactory = this._componentFactoryResolver.resolveComponentFactory(PopComponent);
-  const popRef = this.popContainer.createComponent(popComponentFactory);
-  popRef.instance.decrementValue = 1;
-  popRef.location.nativeElement.style.position = 'absolute';
-  popRef.location.nativeElement.style.left = event.clientX + 'px';
-  popRef.location.nativeElement.style.top = event.clientY + 'px';
-
-  console.log('${event.clientY}px')
-  setTimeout(() => {
-    popRef.destroy();
-  }, 1000);
-
- }
-
-  onMouseClick(e: MouseEvent) {
-    console.log(e);
-
-    const popupHeight = 400, // hardcode these values
-      popupWidth = 300;    // or compute them dynamically
-
-    let popupXPosition,
-        popupYPosition
-
-    if(e.clientX + popupWidth > window.innerWidth){
-        popupXPosition = e.pageX - popupWidth;
-    }else{
-        popupXPosition = e.pageX;
-    }
-
-    if(e.clientY + popupHeight > window.innerHeight){
-        popupYPosition = e.pageY - popupHeight;
-    }else{
-        popupYPosition = e.pageY;
-    }
-    console.log(popupHeight)
-    console.log(popupWidth)
-    console.log(popupXPosition)
-    console.log(popupYPosition)
-      this.popup = true;
-
-      this.renderer = this._rendererFactory.createRenderer(null, null);
-      let div = this.renderer.createElement("div");
-      //console.log(document.getElementById('life-container'))
-      this.renderer.addClass(div, "popup");
-      this.renderer.appendChild(document.getElementsByClassName('life-container'), div);
-    }
+  onPokemonClick(event: MouseEvent){
+    const popComponentFactory = this._componentFactoryResolver.resolveComponentFactory(PopComponent);
+    const popRef = this.popContainer.createComponent(popComponentFactory);
+    popRef.instance.decrementValue = "clic";
+    popRef.location.nativeElement.style.position = 'absolute';
+    popRef.location.nativeElement.style.left = event.clientX + 'px';
+    popRef.location.nativeElement.style.top = (event.clientY - 20) + 'px';
+    popRef.location.nativeElement.style.userEvents = 'none';
+    popRef.location.nativeElement.style.pointerEvents = 'none';
+    setTimeout(() => {
+      popRef.destroy();
+    }, 300);
+  }
 
   startGame() {
     this.gameStarted = true;

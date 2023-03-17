@@ -8,16 +8,15 @@ import { Component, Input } from '@angular/core';
   animations: [
     trigger('popAnimation', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.8)' }),
-        animate('.2s ease-out', style({ opacity: 1, transform: 'scale(1)' })),
+        style({opacity: 0}),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(-300%)' })),
       ]),
       transition(':leave', [
-        animate('.2s ease-out', style({ opacity: 0, transform: 'scale(0.8)' })),
-      ]),
-    ])
+        animate('300ms ease-out', style({ opacity: 0, transform: 'translateY(120px)' })),
+      ])
+    ]),
   ],
 })
 export class PopComponent {
-@Input() decrementValue! : number;
-boo : boolean = false;
+@Input() decrementValue! : String;
 }
