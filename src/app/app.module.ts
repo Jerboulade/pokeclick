@@ -6,10 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ModulesModule } from './shared/modules/modules.module';
+import { ClickComponent } from './shared/component/click/click/click.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ClickComponent
 
   ],
   imports: [

@@ -41,11 +41,7 @@ launch(){
 }
 
 submitStarter(choiceIndex : number){
-  let starter : pokemonForm = {
-    order : this.starterItemList[choiceIndex].order,
-    level : 0,
-    xp: 0
-  }
+  let starter : pokemonForm = new pokemonForm(choiceIndex, 1, 1, 1, 1, 1, 1);
   this.starter = this.starterItemList[choiceIndex];
   // use laucher to check user info + ... (√)
   this._pokeService.postPokemonForm(this._launcherService.connectedAs, starter);

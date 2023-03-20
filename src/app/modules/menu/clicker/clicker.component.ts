@@ -28,6 +28,7 @@ export class ClickerComponent implements OnInit {
         this.enemy = data;
         //console.log("GET " + this.enemy.name);
         let hp : number | undefined = this.enemy?.stats.find((stat) => stat.stat.name == "hp")?.base_stat;
+        hp = 10000;
         this.pokemonLifeMax = hp ? hp : 10;
         this.pokemonLife = this.pokemonLifeMax;
         console.log(this.enemy?.sprites.front_default);
@@ -49,6 +50,7 @@ export class ClickerComponent implements OnInit {
   loadData() {}
 
   decrementLife($event: MouseEvent, dmg : number) {
+    dmg = Math.ceil(Math.random() * 16) + 1
     if (this.gameStarted && this.pokemonLife > 0) {
       this.pokemonLife -= dmg;
       this._popService.onClic($event, dmg.toString());
