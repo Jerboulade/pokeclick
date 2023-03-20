@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { PokemonCardComponent } from '../component/pokemon-card/pokemon-card.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -9,11 +10,13 @@ import { PokemonCardComponent } from '../component/pokemon-card/pokemon-card.com
     PokemonCardComponent
   ],
   imports: [
-    CommonModule,
+    CommonModule
   ],
   exports : [
     HttpClientModule,
-    PokemonCardComponent
+    PokemonCardComponent,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class ModulesModule { }

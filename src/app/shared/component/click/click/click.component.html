@@ -1,1 +1,23 @@
-<p>click works!</p>
+<div class="pokemon-container">
+  <div class="item">
+    <div class="item-item">
+      <img draggable="false" *ngIf="enemy" class="pokemon-container-img" [src]="enemy_sprite" (click)="decrementLife($event, 1)" [class.disabled]="enemy_life === 0 || !gameStarted">
+    </div>
+    <div class="item-item">
+      <div class="life-container">
+        <div class="life-bar" [style.height.%]="getLifePercentage()"></div>
+      </div>
+    <div *ngIf="enemy_life" class="life">{{ enemy_life }}</div>
+    </div>
+  </div>
+
+  <div>
+    <button *ngIf="enemy_life === 0" (click)="startGame()">Rejouer</button>
+    <button *ngIf="!gameStarted" (click)="startGame()">Start</button>
+  </div>
+
+  <div>
+    <p *ngIf="enemy_life === 0">Vous avez gagné!</p>
+  </div>
+
+</div>
