@@ -10,9 +10,7 @@ import { ClickComponent } from './shared/component/click/click/click.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ClickComponent
-
+    AppComponent
   ],
   imports: [
     BrowserAnimationsModule,

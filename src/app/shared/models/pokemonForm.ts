@@ -36,7 +36,7 @@ export class pokemonForm{
     this.spec_EV = 0;
 
     this.hp_IV = Math.floor(Math.random() * 16);
-    this.atk_IV = Math.floor(Math.random() * 16);
+    this.atk_IV = 0;
     this.def_IV = Math.floor(Math.random() * 16);
     this.spd_IV = Math.floor(Math.random() * 16);
     this.spec_IV = Math.floor(Math.random() * 16);
@@ -44,12 +44,14 @@ export class pokemonForm{
 
 
   set setXp(value : number){
+    if ( this.xp + value > 1250000 )
+      this.xp = 1250000 - value;
     this.xp += value;
 
   }
 
   get level(){
-    let level =  this.xpTable.findIndex((elem) => elem > this.xp)
+    let level =  this.xpTable.findIndex((elem) => elem >= this.xp)
     if (this.xp == this.xpTable[level])
       level++;
     return level;
@@ -106,6 +108,10 @@ export class pokemonForm{
   }
 
   private statCalculation(name : string, base : number, iv : number, ev : number) : number {
+    console.log(name +" base: "+ base)
+    console.log(name +" iv: "+ iv)
+    console.log(name +" ev: "+ ev)
+    console.log(name +" ev sqrt(ev): "+ Math.floor((Math.ceil(Math.sqrt(ev))) / 4));
     return Math.floor((((base + iv) * 2 + Math.floor((Math.ceil(Math.sqrt(ev))) / 4)) * this.level) / 100) + (name == 'hp' ? this.level + 10 : 5);
   }
 

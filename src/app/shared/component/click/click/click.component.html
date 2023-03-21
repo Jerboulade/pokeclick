@@ -7,7 +7,7 @@
       <div class="life-container">
         <div class="life-bar" [style.height.%]="getLifePercentage()"></div>
       </div>
-    <div *ngIf="enemy_life" class="life">{{ enemy_life }}</div>
+    <div *ngIf="enemy_life" class="life">{{ enemy_life | number : '.0-0' }}</div>
     </div>
   </div>
 

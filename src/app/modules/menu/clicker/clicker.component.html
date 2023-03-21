@@ -1,4 +1,10 @@
-  <div class="container">
-    <input [(ngModel)]="pokePlayerIndex" (change)="getPokePlayer" type="number" min="1" max="1008">
-    <img draggable="false" *ngIf="pokePlayer" [src]="pokePlayer">
+  <div *ngIf="!fightStart" class="container" style="flex-direction: row;">
+    <input [(ngModel)]="pokePlayerIndex" (change)="getPokePlayer()" type="number" min="1" max="1008">
+    <img draggable="false" *ngIf="pokePlayer" [src]="pokePlayer.sprites.front_default">
   </div>
+  <div *ngIf="!fightStart" class="container" style="flex-direction: row;">
+    <input [(ngModel)]="pokeEnemyIndex" (change)="getPokeEnemy()" type="number" min="1" max="1008">
+    <img draggable="false" *ngIf="pokeEnemy" [src]="pokeEnemy.sprites.front_default">
+  </div>
+  <button *ngIf="!fightStart" (click)="fight()" >fight</button>
+<app-click [player]="player" [enemy]="enemy"  *ngIf="player && enemy && fightStart" [player_sprite]="pokePlayer.sprites.front_default" [enemy_sprite]="pokeEnemy.sprites.front_default"></app-click>
