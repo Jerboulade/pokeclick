@@ -30,6 +30,7 @@ export class ClickComponent implements OnInit {
   }
   ngOnInit(): void {
     this.enemy_life = this.enemy.hp;
+    this.player_life = this.player.hp;
     // console.log("coucou"+this.enemy_life);
     // throw new Error('Method not implemented.');
   }

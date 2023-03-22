@@ -62,4 +62,8 @@ export class PokeService{
   postPokemonForm( token : string, form : pokemonForm ){
     this._serv.updatePokemon(token, form);
   }
+
+  getUserPokemons(token : string) : pokemonForm[] | undefined {
+    return this._serv.getUserPokemons(token);
+  }
 }

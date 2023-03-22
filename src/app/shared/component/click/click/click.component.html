@@ -1,21 +1,39 @@
 <div class="pokemon-container">
-  <div class="item">
-    <div class="item-item">
-      <img draggable="false" *ngIf="enemy" class="pokemon-container-img" [src]="enemy_sprite" (click)="decrementLife($event, 1)" [class.disabled]="enemy_life === 0 || !gameStarted">
+  <div class="item" style="padding-left: 10%;">
+
+    <div class="item-item" >
+      <img draggable="false" *ngIf="enemy" class="pokemon-container-img" [src]="enemy_sprite" (click)="gameStarted ? decrementLife($event, 1) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
     </div>
+
     <div class="item-item">
       <div class="life-container">
         <div class="life-bar" [style.height.%]="getLifePercentage()"></div>
       </div>
-    <div *ngIf="enemy_life" class="life">{{ enemy_life | number : '.0-0' }}</div>
+      <div *ngIf="enemy_life" class="life">{{ enemy_life | number : '.0-0' }}</div>
     </div>
+
   </div>
 
-  <div>
+  <div class="item">
     <button *ngIf="enemy_life === 0" (click)="startGame()">Rejouer</button>
     <button *ngIf="!gameStarted" (click)="startGame()">Start</button>
   </div>
 
+
+  <div class="item" style="padding-right: 10%;">
+
+    <div class="item-item" >
+      <img draggable="false" *ngIf="player" class="pokemon-container-img" [src]="player_sprite">
+    </div>
+
+    <div class="item-item">
+      <div class="life-container">
+        <div class="life-bar" [style.height.%]=100></div>
+      </div>
+      <div *ngIf="player_life" class="life">{{ player_life | number : '.0-0' }}</div>
+    </div>
+
+  </div>
   <div>
     <p *ngIf="enemy_life === 0">Vous avez gagné!</p>
   </div>

@@ -1,31 +1,33 @@
-<div class="container">
-  <p>new-game works!</p>
-  <form *ngIf="formIsVisible" [formGroup]="form">
-    <table>
-      <tr>
-        <td><label>Pseudo</label></td>
-        <td><input type="text" formControlName="pseudo">
-        </td>
-      </tr>
-      <tr>
-        <td><label>Secret key</label></td>
-        <td><input type="password"  formControlName="key"></td>
-      </tr>
-      <tr>
-        <td><label>check</label></td>
-        <td><input type="checkbox" formControlName="condition"></td>
-      </tr>
-    </table>
-    <button (click)="launch()">submit</button>
-  </form>
-  <form *ngIf="starterIsVisible">
-    <td><a (click)="submitStarter(0)">{{starterItemList[0].name}}</a><app-pokemon-card [pokemon]="starterItemList[0]"></app-pokemon-card></td>
-    <td><a (click)="submitStarter(1)">{{starterItemList[1].name}}</a><app-pokemon-card [pokemon]="starterItemList[1]"></app-pokemon-card></td>
-    <td><a (click)="submitStarter(2)">{{starterItemList[2].name}}</a><app-pokemon-card [pokemon]="starterItemList[2]"></app-pokemon-card></td>
-  </form>
-  <div *ngIf="!starterIsVisible && !formIsVisible">
-    <app-pokemon-card [pokemon]="starter"></app-pokemon-card>
+<div class="screen_border">
+  <div class="screen_container">
+    <div class="pc_seablue">
+      <p>new-game works!</p>
+      <form *ngIf="formIsVisible" [formGroup]="form">
+        <table>
+          <tr>
+            <td><label>Pseudo</label></td>
+            <td><input type="text" formControlName="pseudo">
+            </td>
+          </tr>
+          <tr>
+            <td><label>Secret key</label></td>
+            <td><input type="password"  formControlName="key"></td>
+          </tr>
+          <tr>
+            <td><label>check</label></td>
+            <td><input type="checkbox" formControlName="condition"></td>
+          </tr>
+        </table>
+        <button (click)="launch()">submit</button>
+      </form>
+      <form *ngIf="starterIsVisible">
+        <td><a (click)="submitStarter(0)">{{starterItemList[0].name}}</a><app-pokemon-card [pokemon]="starterItemList[0]"></app-pokemon-card></td>
+        <td><a (click)="submitStarter(1)">{{starterItemList[1].name}}</a><app-pokemon-card [pokemon]="starterItemList[1]"></app-pokemon-card></td>
+        <td><a (click)="submitStarter(2)">{{starterItemList[2].name}}</a><app-pokemon-card [pokemon]="starterItemList[2]"></app-pokemon-card></td>
+      </form>
+      <div *ngIf="!starterIsVisible && !formIsVisible">
+        <app-pokemon-card [pokemon]="starter"></app-pokemon-card>
+      </div>
+    </div>
   </div>
-
-
 </div>

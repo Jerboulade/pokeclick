@@ -63,21 +63,21 @@ export class ClickerComponent {
     this.player = this._pokeMapper.dtoToForm(this.pokePlayer);
     this.enemy = this._pokeMapper.dtoToForm(this.pokeEnemy);
 
-    // this.enemy.setXp = 1250000;
-    // this.enemy.setEV_hp  = 65535;
-    // this.enemy.setEV_def = 65535;
-    // this.enemy.setEV_spd = 65535;
-    // this.enemy.setEV_atk = 65535;
+     this.enemy.setXp = 1250000;
+     this.enemy.setEV_hp  = 65535;
+   this.enemy.setEV_def = 65535;
+     this.enemy.setEV_spd = 65535;
+     this.enemy.setEV_atk = 65535;
 
-    // this.player.setXp = 1250000;
-    // this.player.setEV_hp  = 65535;
-    // this.player.setEV_def = 65535;
-    // this.player.setEV_spd = 65535;
-    // this.player.setEV_atk = 65535;
+    this.player.setXp = 1250000;
+     this.player.setEV_hp  = 65535;
+     this.player.setEV_def = 65535;
+   this.player.setEV_spd = 65535;
+     this.player.setEV_atk = 65535;
 
     console.log(this.player)
     console.log(this.enemy)
-    console.log(this.pokePlayer.sprites.front_default)
+    console.log(this.pokePlayer.sprites.back_default)
     console.log(this.pokeEnemy.sprites.front_default)
     this.fightStart = true;
 

@@ -25,9 +25,6 @@ import { PopComponent } from './clicker/pop/pop/pop.component';
     MenuRoutingModule,
     ReactiveFormsModule,
     ModulesModule,
-  ],
-  providers: [
-    PokeService
   ]
 })
 export class MenuModule { }
