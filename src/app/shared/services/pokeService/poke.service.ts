@@ -29,7 +29,7 @@ export class PokeService{
         })
       }
     });
-    //console.log(this.pokeList[0]);
+    console.log(this.pokeList[0]);
    }
 
 
@@ -52,9 +52,14 @@ export class PokeService{
   getPokemonDTOByOrder(order : number) : pokemonDTO | Observable<pokemonDTO> | undefined {
     if ( order <= 0 || order > 1010)
       return ;
+    console.log("order in getPokemonDTOByOrder : "+ order);
     let pokemon : pokemonDTO | undefined = this.pokedex.find( pk => pk.order == order );
-    if (!pokemon)
+    if (!pokemon){
+      //console.log("url in getPokemonDTOByOrder : "+ this.pokeURL + "pokemon/" + order);
       return this._http.get<pokemonDTO>(this.pokeURL + "pokemon/" + order)
+    }
+    else
+      console.log("founded in pokedex")
     console.log(pokemon);
     return (pokemon);
   }

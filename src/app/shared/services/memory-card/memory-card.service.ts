@@ -12,10 +12,10 @@ export class MemoryCardService implements OnInit, OnDestroy {
 
   constructor() { }
   ngOnDestroy(): void {
-    console.log("Mem Init");
+    console.log("Mem Destroy");
   }
   ngOnInit(): void {
-    console.log("Mem Destroy");
+    console.log("Mem Init");
   }
   createUser(form : any) : string{
     let user : Trainer = {

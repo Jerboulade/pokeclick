@@ -31,6 +31,11 @@ export interface Stat{
 }
 
 export interface Sprite {
-  front_default : string;
-  back_default : string;
+  front_default : string,
+  back_default : string,
+  official : string,
+  other : Other;
+}
+
+export interface Other {
 }

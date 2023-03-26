@@ -1,0 +1,10 @@
+<div class="fight-container">
+  <p>click in parent : {{clicInParent}}</p>
+  <p>fight result : {{fightResult}}</p>
+  <app-click  (clickEvent)="onChildClick($event)" (endFight)="endFightResult($event)"   [player_sprite]="poke.sprite_back" [enemy_sprite]="poke2.sprite_front" [player]="poke" [enemy]="poke2" ></app-click>
+</div>
+<div class="rand-pokemon-container">
+  <div *ngFor="let randPoke of randomPokeList">
+    <app-pokemon-form-card (click)="clickEnemy(randPoke)" [pokemon]="randPoke"></app-pokemon-form-card>
+  </div>
+</div>

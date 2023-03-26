@@ -20,7 +20,7 @@
         </table>
         <button (click)="launch()">submit</button>
       </form>
-      <form *ngIf="starterIsVisible">
+      <form >
         <td><a (click)="submitStarter(0)">{{starterItemList[0].name}}</a><app-pokemon-card [pokemon]="starterItemList[0]"></app-pokemon-card></td>
         <td><a (click)="submitStarter(1)">{{starterItemList[1].name}}</a><app-pokemon-card [pokemon]="starterItemList[1]"></app-pokemon-card></td>
         <td><a (click)="submitStarter(2)">{{starterItemList[2].name}}</a><app-pokemon-card [pokemon]="starterItemList[2]"></app-pokemon-card></td>

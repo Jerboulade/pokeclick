@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { pokeListItem } from 'src/app/shared/models/pokeListItem';
+import { pokemonDTO } from 'src/app/shared/models/pokemonDTO';
 import { pokemonForm } from 'src/app/shared/models/pokemonForm';
 import { LauncherService } from 'src/app/shared/services/launcher/launcher.service';
+import { PokemapperService } from 'src/app/shared/services/mapper/pokemapper.service';
 import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
 
 @Component({
@@ -13,7 +15,11 @@ import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
 })
 export class NewGameComponent {
 
-constructor(private _formBuilder : FormBuilder, private _launcherService : LauncherService, private _pokeService : PokeService, private _router : Router){}
+constructor(private _formBuilder : FormBuilder,
+            private _launcherService : LauncherService,
+            private _pokeService : PokeService,
+            private _router : Router,
+            private _mapper : PokemapperService){}
 
 form : FormGroup = this._formBuilder.group({
   pseudo : ['', [Validators.required]],
@@ -42,12 +48,18 @@ launch(){
 }
 
 submitStarter(choiceIndex : number){
-  let starter : pokemonForm = new pokemonForm((choiceIndex * 3)  + 1, 1, 1, 1, 1, 1, 1);
-  this.starter = this.starterItemList[choiceIndex];
-  // use laucher to check user info + ... (√)
-  this._pokeService.postPokemonForm(this._launcherService.getUserToken, starter);
-  this.starterIsVisible = false;
-  this._router.navigate(['/game']);
+  let pok : pokemonDTO = this._pokeService.getPokemonDTOByOrder((choiceIndex * 3)+1)?.subscribe({
+    next : (data : pokemonDTO) => {
+      console.log("SUBMIT STARTER" + data.name);
+      this._pokeService.postPokemonForm(this._launcherService.getUserToken, this._mapper.dtoToForm(data));
+      //let starter : pokemonForm = new pokemonForm((choiceIndex * 3)  + 1,  1, 1, 1, 1, 1, 1, "", "", "");
+      this.starter = this.starterItemList[choiceIndex];
+      // use laucher to check user info + ... (√)
+      this.starterIsVisible = false;
+      this._router.navigate(['/game']);
+    }
+  })
+
 }
 
 }

@@ -7,11 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ModulesModule } from './shared/modules/modules.module';
 import { ClickComponent } from './shared/component/click/click/click.component';
+import { PokemonFormCardComponent } from './shared/component/pokemon-form-card/pokemon-form-card.component';
 
 @NgModule({
   declarations: [
     AppComponent
-  ],
+],
   imports: [
     BrowserAnimationsModule,
     AppRoutingModule,

@@ -17,5 +17,6 @@ export class GameComponent {
     this.starter = _serv.getAnyPokemonByUserId(_launcher.getUserToken);
     console.log(this.starter);
     this.animate = true;
+
   }
 }

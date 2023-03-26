@@ -1,7 +1,20 @@
-<div class="container" style="padding: 60px;">
-  <div *ngFor="let p of poke">
-    <app-pokemon-card [pokemon]="p"></app-pokemon-card>
-</div>
+<div class="component-container" style="padding: 60px;">
+  <div class="other-container">
+    <!-- <p>other-container</p> -->
+    <!-- <app-pokemon-card [pokemon]="selectedPoke"></app-pokemon-card> -->
+    <app-show-stats *ngIf="getPokemonForm" [pokemon]="getPokemonForm"></app-show-stats>
 
+  </div>
+  <div *ngIf="trig" class="pokemons-container">
+    <div class="pokemon"  *ngFor="let p of getPoke">
+      <app-pokemon-card [pokemon]="p" (click)="select(p)"></app-pokemon-card>
+    </div>
+  </div>
+
+  <div class="pokemons-container">
+    <div class="pokemon"  *ngFor="let pok of getPokemons">
+      <app-pokemon-form-card [pokemon]="pok"></app-pokemon-form-card>
+    </div>
+  </div>
 
 </div>

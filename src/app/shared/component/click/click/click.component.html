@@ -1,8 +1,11 @@
 <div class="pokemon-container">
+  <div class="item">
+    <p>{{clic}}</p>
+  </div>
   <div class="item" style="padding-left: 10%;">
 
     <div class="item-item" >
-      <img draggable="false" *ngIf="enemy" class="pokemon-container-img" [src]="enemy_sprite" (click)="gameStarted ? decrementLife($event, 1) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
+      <img draggable="false" *ngIf="enemy" class="pokemon-container-img" [src]="enemy_sprite" (click)="gameStarted && !gameFinished ? dealDamage($event) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
     </div>
 
     <div class="item-item">
@@ -15,8 +18,8 @@
   </div>
 
   <div class="item">
-    <button *ngIf="enemy_life === 0" (click)="startGame()">Rejouer</button>
-    <button *ngIf="!gameStarted" (click)="startGame()">Start</button>
+    <button *ngIf="enemy_life < enemy.hp / 2" (click)="catch()">catch</button>
+    <button *ngIf="!gameStarted && !gameFinished" (click)="startGame()">Start</button>
   </div>
 
 

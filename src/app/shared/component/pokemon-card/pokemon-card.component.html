@@ -1,11 +1,11 @@
-<div class="poke-card">
-  <div class="container" style="text-align: center;">
-    <p>{{ pokemon.order }}</p>
-    <div style="text-align: center;">
-      <img [src]="sprite_url" style="height: 128px; width: 128px; filter: brightness(0);">
-    </div>
-    <p>{{ pokemon.name }}</p>
+<div class="poke-card-container">
+  <!-- <p>#{{ pokemon.order }}</p> -->
 
-  </div>
+    <div style="text-align: center;">
+      <img class="poke-sprite" [src]="getSprite">
+    </div>
+    <p *ngIf="pokemon">{{ pokemon.name.toUpperCase() }}</p>
+    <p>Lv. 19</p>
+
 </div>
 

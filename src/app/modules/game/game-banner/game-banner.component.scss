@@ -1,10 +1,13 @@
 .game-banner {
-  display : flex;
-  flex-direction: row;
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  //position: absolute;
+  flex-wrap: wrap-reverse;
+  align-content: center;
   left: 0;
-  width: 10%;
+  width: 250px;
+  line-height: 2em;
+  padding-top: 50px;
   height: 100%;
-  background-color: rgb(9, 9, 47);
-
+  background-color: rgb(165, 157, 255);
 }

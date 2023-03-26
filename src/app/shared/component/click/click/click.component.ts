@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { pokemonForm } from 'src/app/shared/models/pokemonForm';
 import { PopService } from 'src/app/shared/services/popService/pop.service';
 
@@ -7,7 +7,7 @@ import { PopService } from 'src/app/shared/services/popService/pop.service';
   templateUrl: './click.component.html',
   styleUrls: ['./click.component.scss']
 })
-export class ClickComponent implements OnInit {
+export class ClickComponent implements OnInit, OnChanges {
   @Input()
   player! : pokemonForm;
   @Input()
@@ -17,10 +17,16 @@ export class ClickComponent implements OnInit {
   @Input()
   enemy_sprite! : string;
 
+  clic : number = 0;
+
+  @Output() clickEvent: EventEmitter<number> = new EventEmitter<number>();
+  @Output() endFight: EventEmitter<string> = new EventEmitter<string>();
+
   player_life! : number;
   enemy_life! : number;
 
   gameStarted = false;
+  gameFinished = false;
   errorMessage! : string;
   timer : any;
 
@@ -28,16 +34,25 @@ export class ClickComponent implements OnInit {
   constructor( private _popService : PopService ) {
       // console.log("Click init");
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['enemy'])
+      this.ngOnInit();
+  }
   ngOnInit(): void {
     this.enemy_life = this.enemy.hp;
     this.player_life = this.player.hp;
+    this.clickEvent.emit( this.clic );
+    this.clic = 0;
+    this.gameStarted = false;
+    this.gameFinished = false;
+
     // console.log("coucou"+this.enemy_life);
     // throw new Error('Method not implemented.');
   }
 
   startGame() {
     // this.enemy_life = this.enemy.hp;
-    console.log("coucou"+this.enemy_life);
+    // console.log("coucou"+this.enemy_life);
     this.timer = setInterval(() => {
       if (this.enemy_life < this.enemy.hp){
         if (this.enemy_life + 1 > this.enemy.hp)
@@ -48,10 +63,11 @@ export class ClickComponent implements OnInit {
     this.gameStarted = true;
   }
 
-  decrementLife($event: MouseEvent, dmg : number) {
-    dmg = this.damageCalculator(); //Math.ceil(Math.random() * 16) + 1
-    // console.log("decrementLife.dmg = "+dmg);
+  dealDamage($event: MouseEvent) {
+    let dmg = this.damageCalculator(); //Math.ceil(Math.random() * 16) + 1
+    // console.log("dealDamage.dmg = "+dmg);
     this._popService.onClic($event, dmg.toPrecision(4));
+    ++this.clic;
     if (this.gameStarted && this.enemy_life > 0) {
       if (this.enemy_life - dmg >= 0)
         this.enemy_life -= dmg;
@@ -60,9 +76,19 @@ export class ClickComponent implements OnInit {
     }
     if (this.enemy_life <= 0) {
       this.gameStarted = false;
+      this.gameFinished = true;
+      this.player.setXp = this.clic;
+      this.clickEvent.emit( this.clic );
+      this.endFight.emit("win");
+      this.clic = 0;
       clearInterval(this.timer);
         //alert('Vous avez gagné!');
     }
+  }
+
+  catch() {
+    this.endFight.emit("catch");
+
   }
 
   getLifePercentage() {
@@ -73,11 +99,11 @@ export class ClickComponent implements OnInit {
   }
 
   damageCalculator() : number{
-    console.log("p.level : "+this.player.level);
-    console.log("p.spd : "+this.player.spd);
-    console.log("p.atk : "+this.player.atk);
-    console.log("e.def : "+this.enemy.def);
-    console.log("p.level : "+this.player.level);
+    // console.log("p.level : "+this.player.level);
+    // console.log("p.spd : "+this.player.spd);
+    // console.log("p.atk : "+this.player.atk);
+    // console.log("e.def : "+this.enemy.def);
+    // console.log("p.level : "+this.player.level);
     // src: https://bulbapedia.bulbagarden.net/wiki/Damage
     return ((((((2 * this.player.level * this.criticalCalculator(this.player.spd)) / 5) + 2) * this.player.atk / this.enemy.def) / 50) + 0.5) // * stab( 1 , 1.5 ) * type1( 0.5 , 1 , 2 ) * type2( 0.5 , 1 , 2 )
   }

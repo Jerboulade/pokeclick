@@ -1,0 +1,26 @@
+<div class="show-stat-container">
+  <div class="item" >
+    <p> {{ pokemon.name.toUpperCase() }} </p>
+    <p> #{{ pokemon.order }} </p>
+    <p> Level : {{ pokemon.level }} </p>
+    <p> Xp : {{ pokemon.getXp }} </p>
+  </div>
+  <div class="item" >
+    <img src="{{pokemon.sprite_front}}" style="height: 200px; width: 200px;">
+  </div>
+  <div class="item" >
+    <p> HP  : {{ pokemon.hp }} </p>
+    <p> ATK : {{ pokemon.atk }} </p>
+    <p> DEF : {{ pokemon.def }} </p>
+    <p> SPD : {{ pokemon.spd }} </p>
+  </div>
+  <!-- <table>
+    <tr><p> order : {{ pokemon.order }} </p></tr>
+    <tr><p> level : {{ pokemon.level }} </p></tr>
+    <tr><p> hp : {{ pokemon.hp }} </p></tr>
+    <tr><p> atk : {{ pokemon.atk }} </p></tr>
+    <tr><p> def : {{ pokemon.def }} </p></tr>
+    <tr><p> spd : {{ pokemon.spd }} </p></tr>
+    <img src="{{pokemon.sprite_front}}" style="height: 200px; width: 200px;">
+  </table> -->
+</div>

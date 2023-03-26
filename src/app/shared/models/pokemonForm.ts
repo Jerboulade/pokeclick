@@ -1,10 +1,17 @@
 export class pokemonForm{
   order : number;
+  name : string;
+  //id : number;
+  sprite_front : string;
+  sprite_back : string;
+  sprite_official : string;
+
+
   private xp : number;
   private hp_base : number;
   private atk_base : number;
   private def_base : number;
-  private  spd_base : number;
+  private spd_base : number;
   private specAtk_base : number;
   private specDef_base : number;
   private hp_IV : number;
@@ -19,8 +26,21 @@ export class pokemonForm{
   private spec_EV : number;
   private xpTable : number[] = [0,10,33,80,156,270,428,640,911,1250,1663,2160,2746,3430,4218,5120,6141,7290,8573,10000,11576,13310,15208,17280,19531,21970,24603,27440,30486,33750,37238,40960,44921,49130,53593,58320,63316,68590,74148,80000,86151,92610,99383,106480,113906,121670,129778,138240,147061,156250,165813,175760,186096,196830,207968,219520,231491,243890,256723,270000,283726,297910,312558,327680,343281,359370,375953,393040,410636,428750,447388,466560,486271,506530,527343,548720,570666,593190,616298,640000,664301,689210,714733,740880,767656,795070,823128,851840,881211,911250,941963,973360,1005446,1038230,1071718,1105920,1140841,1176490,1212873,1250000]
 
-  constructor(order : number, hp : number, atk : number, def : number, spd : number, spec_atk : number, spec_def : number){
+  constructor(order : number,
+               name : string,
+               hp : number,
+               atk : number,
+               def : number,
+               spd : number,
+               spec_atk : number,
+               spec_def : number,
+               sprite_front : string,
+               sprite_back : string,
+               sprite_official : string,
+                ){
+    console.log("pokemon constructor order :"+order);
     this.order = order;
+    this.name = name;
     this.hp_base = hp;
     this.atk_base = atk;
     this.def_base = def;
@@ -28,13 +48,15 @@ export class pokemonForm{
     this.specAtk_base = spec_atk;
     this.specDef_base = spec_def;
     this.xp = 0;
-
     this.hp_EV = 0;
     this.atk_EV = 0;
     this.def_EV = 0;
     this.spd_EV = 0
     this.spec_EV = 0;
 
+    this.sprite_front = sprite_front;
+    this.sprite_back = sprite_back;
+    this.sprite_official = sprite_official;
     this.hp_IV = Math.floor(Math.random() * 16);
     this.atk_IV = 0;
     this.def_IV = Math.floor(Math.random() * 16);
@@ -47,7 +69,11 @@ export class pokemonForm{
     if ( this.xp + value > 1250000 )
       this.xp = 1250000 - value;
     this.xp += value;
+    console.log(this.xp);
+  }
 
+  get getXp(){
+    return this.xp;
   }
 
   get level(){
@@ -108,10 +134,11 @@ export class pokemonForm{
   }
 
   private statCalculation(name : string, base : number, iv : number, ev : number) : number {
-    console.log(name +" base: "+ base)
-    console.log(name +" iv: "+ iv)
-    console.log(name +" ev: "+ ev)
-    console.log(name +" ev sqrt(ev): "+ Math.floor((Math.ceil(Math.sqrt(ev))) / 4));
+    // console.log("order: "+ this.order)
+    // console.log(name +" base: "+ base)
+    // console.log(name +" iv: "+ iv)
+    // console.log(name +" ev: "+ ev)
+    // console.log(name +" ev sqrt(ev): "+ Math.floor((Math.ceil(Math.sqrt(ev))) / 4));
     return Math.floor((((base + iv) * 2 + Math.floor((Math.ceil(Math.sqrt(ev))) / 4)) * this.level) / 100) + (name == 'hp' ? this.level + 10 : 5);
   }
 

@@ -1,0 +1,11 @@
+<div class="poke-card-container">
+  <!-- <p>#{{ pokemon.order }}</p> -->
+
+    <div style="text-align: center;">
+      <img *ngIf="getPokemon" style="width: 100px;height: 100px;" class="poke-sprite" [src]="getPokemon.sprite_front">
+      <div *ngIf="!getPokemon" style="width: 100px;height: 100px;text-align: center;align-items: center;">?</div>
+    </div>
+    <p >{{ getPokemon.name.toUpperCase() }}</p>
+    <p >{{ getPokemon.level }}</p>
+
+</div>

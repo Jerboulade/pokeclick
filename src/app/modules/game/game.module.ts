@@ -7,6 +7,8 @@ import { ModulesModule } from 'src/app/shared/modules/modules.module';
 import { PokemonsComponent } from './pokemons/pokemons.component';
 import { GameBannerComponent } from './game-banner/game-banner.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
+import { ShowStatsComponent } from './pokemons/show-stats/show-stats.component';
+import { FightComponent } from './fight/fight.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { PokedexComponent } from './pokedex/pokedex.component';
     GameComponent,
     PokemonsComponent,
     GameBannerComponent,
-    PokedexComponent
+    PokedexComponent,
+    ShowStatsComponent,
+    FightComponent
   ],
   imports: [
     CommonModule,
