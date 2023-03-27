@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { pokemonForm } from 'src/app/shared/models/pokemonForm';
 import { PopService } from 'src/app/shared/services/popService/pop.service';
 
@@ -7,7 +7,7 @@ import { PopService } from 'src/app/shared/services/popService/pop.service';
   templateUrl: './click.component.html',
   styleUrls: ['./click.component.scss']
 })
-export class ClickComponent implements OnInit, OnChanges {
+export class ClickComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   player! : pokemonForm;
   @Input()
@@ -34,14 +34,21 @@ export class ClickComponent implements OnInit, OnChanges {
   constructor( private _popService : PopService ) {
       // console.log("Click init");
   }
+  ngOnDestroy(): void {
+    clearInterval(this.timer);
+
+  }
   ngOnChanges(changes: SimpleChanges): void {
+    //this.clickEvent.emit( this.clic );
+
+    clearInterval(this.timer);
     if (changes['enemy'])
       this.ngOnInit();
   }
   ngOnInit(): void {
     this.enemy_life = this.enemy.hp;
     this.player_life = this.player.hp;
-    this.clickEvent.emit( this.clic );
+    //this.clickEvent.emit( this.clic );
     this.clic = 0;
     this.gameStarted = false;
     this.gameFinished = false;
@@ -49,6 +56,7 @@ export class ClickComponent implements OnInit, OnChanges {
     // console.log("coucou"+this.enemy_life);
     // throw new Error('Method not implemented.');
   }
+
 
   startGame() {
     // this.enemy_life = this.enemy.hp;
@@ -88,6 +96,9 @@ export class ClickComponent implements OnInit, OnChanges {
 
   catch() {
     this.endFight.emit("catch");
+    this.gameStarted = false;
+    this.gameFinished = true;
+    clearInterval(this.timer);
 
   }
 

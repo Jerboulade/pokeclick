@@ -7,6 +7,7 @@ export class pokemonForm{
   sprite_official : string;
 
 
+  private id : string;
   private xp : number;
   private hp_base : number;
   private atk_base : number;
@@ -39,6 +40,7 @@ export class pokemonForm{
                sprite_official : string,
                 ){
     console.log("pokemon constructor order :"+order);
+    this.id = (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)+"-"+ (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)+"-"+ (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     this.order = order;
     this.name = name;
     this.hp_base = hp;
@@ -70,6 +72,11 @@ export class pokemonForm{
       this.xp = 1250000 - value;
     this.xp += value;
     console.log(this.xp);
+  }
+
+
+  get getId() {
+    return this.id;
   }
 
   get getXp(){

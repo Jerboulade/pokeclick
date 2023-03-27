@@ -1,7 +1,8 @@
-<div class="show-stat-container">
+<div *ngIf="pokemon" class="show-stat-container">
   <div class="item" >
     <p> {{ pokemon.name.toUpperCase() }} </p>
     <p> #{{ pokemon.order }} </p>
+    <p> id :{{ pokemon.getId }} </p>
     <p> Level : {{ pokemon.level }} </p>
     <p> Xp : {{ pokemon.getXp }} </p>
   </div>

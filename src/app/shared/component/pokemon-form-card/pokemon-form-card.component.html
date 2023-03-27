@@ -2,10 +2,10 @@
   <!-- <p>#{{ pokemon.order }}</p> -->
 
     <div style="text-align: center;">
-      <img *ngIf="getPokemon" style="width: 100px;height: 100px;" class="poke-sprite" [src]="getPokemon.sprite_front">
-      <div *ngIf="!getPokemon" style="width: 100px;height: 100px;text-align: center;align-items: center;">?</div>
+      <img *ngIf="pokemon" style="width: 100px;height: 100px;" class="poke-sprite" [src]="pokemon.sprite_front">
+      <div *ngIf="!pokemon" style="width: 100px;height: 100px;text-align: center;align-items: center;">?</div>
     </div>
-    <p >{{ getPokemon.name.toUpperCase() }}</p>
-    <p >{{ getPokemon.level }}</p>
+    <p >{{ pokemon.name.toUpperCase() }}</p>
+    <p >{{ pokemon.level }}</p>
 
 </div>

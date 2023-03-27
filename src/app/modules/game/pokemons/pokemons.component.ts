@@ -39,33 +39,33 @@ export class PokemonsComponent {
     _serv.getUserPokemons(_laucher.getUserToken)?.forEach((p) => {
       this.pokemons?.push(p);
     })
-    tests.forEach((order) => {
-      // console.log(order + " in loop");
-      _pokeService.getPokemonDTOByOrder(order)?.subscribe({
-        next : (data : pokemonDTO) => {
-          console.log(data);
-          //this.player_sprite = data.sprites.front_default;
-          this.pokemons?.push(_mapper.dtoToForm(data));
-          if (this.pokemons?.length === 1){
-            // console.log("coucou");
-            // console.log(this.pokemons[0]);
-            this.pokeFormSelected = this.pokemons[0];
-          }
-          // console.log(order + "order in sub");
-          // console.log(data.order + "data order in sub");
-          // console.log(_mapper.dtoToForm(data));
-        }
-      });
-    })
+    // tests.forEach((order) => {
+    //   // console.log(order + " in loop");
+    //   _pokeService.getPokemonDTOByOrder(order)?.subscribe({
+    //     next : (data : pokemonDTO) => {
+    //       console.log(data);
+    //       //this.player_sprite = data.sprites.front_default;
+    //       this.pokemons?.push(_mapper.dtoToForm(data));
+    //       if (this.pokemons?.length === 1){
+    //         // console.log("coucou");
+    //         // console.log(this.pokemons[0]);
+    //         this.pokeFormSelected = this.pokemons[0];
+    //       }
+    //       // console.log(order + "order in sub");
+    //       // console.log(data.order + "data order in sub");
+    //       // console.log(_mapper.dtoToForm(data));
+    //     }
+    //   });
+    // })
 
     //this.poke.push(this._pokeService.getListItemByOrder(_serv.getAnyPokemonByUserId(_laucher.getUserToken)!.order)!)
-    this.poke.push(this._pokeService.getListItemByOrder(150)!)
-    this.poke.push(this._pokeService.getListItemByOrder(1)!)
-    this.poke.push(this._pokeService.getListItemByOrder(19)!)
-    this.poke.push(this._pokeService.getListItemByOrder(42)!)
-    this.poke.push(this._pokeService.getListItemByOrder(198)!)
-    this.poke.push(this._pokeService.getListItemByOrder(740)!)
-    this.poke.push(this._pokeService.getListItemByOrder(740)!)
+    // this.poke.push(this._pokeService.getListItemByOrder(150)!)
+    // this.poke.push(this._pokeService.getListItemByOrder(1)!)
+    // this.poke.push(this._pokeService.getListItemByOrder(19)!)
+    // this.poke.push(this._pokeService.getListItemByOrder(42)!)
+    // this.poke.push(this._pokeService.getListItemByOrder(198)!)
+    // this.poke.push(this._pokeService.getListItemByOrder(740)!)
+    // this.poke.push(this._pokeService.getListItemByOrder(740)!)
     this.trig = true;
   }
 
@@ -74,9 +74,8 @@ export class PokemonsComponent {
     return this.poke;
   }
 
-  select(pokemon : pokeListItem){
-    console.log(pokemon);
-    this.selectedPoke = pokemon;
-    this.pokeFormSelected = this.pokemons![(this.poke.indexOf(pokemon))];
+  select(pokemon : pokemonForm){
+    this.pokeFormSelected = pokemon;
   }
+
 }

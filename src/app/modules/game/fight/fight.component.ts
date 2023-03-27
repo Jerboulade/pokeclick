@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { pokemonDTO } from 'src/app/shared/models/pokemonDTO';
 import { pokemonForm } from 'src/app/shared/models/pokemonForm';
 import { LauncherService } from 'src/app/shared/services/launcher/launcher.service';
@@ -11,13 +11,14 @@ import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
   templateUrl: './fight.component.html',
   styleUrls: ['./fight.component.scss']
 })
-export class FightComponent {
+export class FightComponent implements OnDestroy {
 
 poke! : pokemonForm;
 poke2! : pokemonForm;
 randomPokeList : pokemonForm[] = []
 clicInParent : number = 0;
 fightResult : string = "";
+randomTimer : any;
 
 constructor(private _pokeService : PokeService, private _serv : MemoryCardService, private _mapper : PokemapperService, private _launcher : LauncherService){
 
@@ -29,10 +30,12 @@ constructor(private _pokeService : PokeService, private _serv : MemoryCardServic
   _pokeService.getPokemonDTOByOrder(6)?.subscribe({
     next : (data : pokemonDTO) => {
       this.poke2 = _mapper.dtoToForm(data);
+      this.randomPokeList.push(this.poke2);
+
     }
   })
 
-  setInterval(() => {
+  this.randomTimer = setInterval(() => {
     if (this.randomPokeList.length < 3){
       let rand : number = Math.ceil(Math.random() * 1000);
     console.log(rand);
@@ -45,15 +48,19 @@ constructor(private _pokeService : PokeService, private _serv : MemoryCardServic
   }, 10000);
 
 }
+  ngOnDestroy(): void {
+    clearInterval(this.randomTimer);
+  }
 
 endFightResult(event : any){
   this.fightResult = event;
   if (this.fightResult == "win" && this.randomPokeList.find(i => i == this.poke2))
     this.randomPokeList.splice(this.randomPokeList.indexOf(this.poke2), 1);
-  else if (this.fightResult == "catch"){
+  else if (this.fightResult == "catch"  && this.randomPokeList.find(i => i == this.poke2)){
     this._pokeService.postPokemonForm(this._launcher.getUserToken, this.poke2)
     this.randomPokeList.splice(this.randomPokeList.indexOf(this.poke2), 1);
   }
+  this.fightResult = "";
   //this.poke2 = {} as any;
 }
 

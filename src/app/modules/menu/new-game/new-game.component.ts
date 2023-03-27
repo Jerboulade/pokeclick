@@ -48,7 +48,7 @@ launch(){
 }
 
 submitStarter(choiceIndex : number){
-  let pok : pokemonDTO = this._pokeService.getPokemonDTOByOrder((choiceIndex * 3)+1)?.subscribe({
+  let pok : pokemonDTO = this._pokeService.getPokemonDTOByOrder(this.starters[choiceIndex])?.subscribe({
     next : (data : pokemonDTO) => {
       console.log("SUBMIT STARTER" + data.name);
       this._pokeService.postPokemonForm(this._launcherService.getUserToken, this._mapper.dtoToForm(data));

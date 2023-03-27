@@ -5,7 +5,10 @@
   <div class="item" style="padding-left: 10%;">
 
     <div class="item-item" >
-      <img draggable="false" *ngIf="enemy" class="pokemon-container-img" [src]="enemy_sprite" (click)="gameStarted && !gameFinished ? dealDamage($event) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
+      <div *ngIf="!enemy" class="what">
+        <p  >?</p>
+      </div>
+      <img draggable="false" *ngIf="enemy" [ngClass]="{ defeated: enemy_life == 0 }" class="pokemon-container-img" [src]="enemy.sprite_front" (click)="gameStarted && !gameFinished ? dealDamage($event) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
     </div>
 
     <div class="item-item">
@@ -26,7 +29,7 @@
   <div class="item" style="padding-right: 10%;">
 
     <div class="item-item" >
-      <img draggable="false" *ngIf="player" class="pokemon-container-img" [src]="player_sprite">
+      <img draggable="false" *ngIf="player" class="pokemon-container-img" [src]="player.sprite_back">
     </div>
 
     <div class="item-item">

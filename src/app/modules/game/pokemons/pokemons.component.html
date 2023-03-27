@@ -5,15 +5,15 @@
     <app-show-stats *ngIf="getPokemonForm" [pokemon]="getPokemonForm"></app-show-stats>
 
   </div>
-  <div *ngIf="trig" class="pokemons-container">
+  <!-- <div *ngIf="trig" class="pokemons-container">
     <div class="pokemon"  *ngFor="let p of getPoke">
-      <app-pokemon-card [pokemon]="p" (click)="select(p)"></app-pokemon-card>
+      <app-pokemon-card [pokemon]="p"></app-pokemon-card>
     </div>
-  </div>
+  </div> -->
 
-  <div class="pokemons-container">
+  <div *ngIf="trig" class="pokemons-container">
     <div class="pokemon"  *ngFor="let pok of getPokemons">
-      <app-pokemon-form-card [pokemon]="pok"></app-pokemon-form-card>
+      <app-pokemon-form-card [pokemon]="pok" (click)="select(pok)"></app-pokemon-form-card>
     </div>
   </div>
 

@@ -18,8 +18,9 @@ export class LauncherService {
   constructor( private _serv : MemoryCardService ) { }
 
   signUp(form : any) : string{
-    return this.connectedAs = this._serv.createUser(form);
-    this.connectedAs
+    this.connectedAs = this._serv.createUser(form)
+    localStorage.setItem('token', this.connectedAs);
+    return this.connectedAs;
   }
 
   login(form : any){
