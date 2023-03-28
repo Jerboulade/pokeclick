@@ -7,4 +7,5 @@ export interface Trainer {
   key : string,
   token : string,
   pokemons : pokemonForm[],
+  activePokemons : pokemonForm[];
 }

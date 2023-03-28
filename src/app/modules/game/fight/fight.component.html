@@ -1,3 +1,9 @@
+
+<div class="rand-pokemon-container">
+  <div *ngFor="let userPoke of userPokemons">
+    <app-pokemon-form-card (click)="clickPlayer(userPoke)" [pokemon]="userPoke"></app-pokemon-form-card>
+  </div>
+</div>
 <div class="fight-container">
   <p>click in parent : {{clicInParent}}</p>
   <p>fight result : {{fightResult}}</p>

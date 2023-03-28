@@ -15,13 +15,15 @@ export class FightComponent implements OnDestroy {
 
 poke! : pokemonForm;
 poke2! : pokemonForm;
-randomPokeList : pokemonForm[] = []
+randomPokeList : pokemonForm[] = [];
+userPokemons : pokemonForm[] = [];
 clicInParent : number = 0;
 fightResult : string = "";
 randomTimer : any;
 
 constructor(private _pokeService : PokeService, private _serv : MemoryCardService, private _mapper : PokemapperService, private _launcher : LauncherService){
 
+  this.userPokemons = _serv.getUserPokemons(_launcher.getUserToken)!
   _pokeService.getPokemonDTOByOrder(3)?.subscribe({
     next : (data : pokemonDTO) => {
       this.poke = _mapper.dtoToForm(data);
@@ -67,7 +69,11 @@ endFightResult(event : any){
 onChildClick(event: any) {
   this.clicInParent = event;
 }
-  clickEnemy(enemy : pokemonForm) {
-    this.poke2 = enemy;
-  }
+
+clickEnemy(enemy : pokemonForm) {
+  this.poke2 = enemy;
+}
+clickPlayer(player : pokemonForm) {
+  this.poke = player;
+}
 }

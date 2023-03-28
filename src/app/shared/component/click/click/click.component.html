@@ -29,7 +29,7 @@
   <div class="item" style="padding-right: 10%;">
 
     <div class="item-item" >
-      <img draggable="false" *ngIf="player" class="pokemon-container-img" [src]="player.sprite_back">
+      <img draggable="false" *ngIf="player" class="pokemon-container-img" [src]="player.sprite_back? player.sprite_back : player.sprite_front">
     </div>
 
     <div class="item-item">
