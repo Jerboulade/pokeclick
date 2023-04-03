@@ -9,13 +9,13 @@ import { PopService } from 'src/app/shared/services/popService/pop.service';
 })
 export class ClickComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
-  player! : pokemonForm;
+  pokePlayer! : pokemonForm;
   @Input()
   enemy! : pokemonForm;
-  @Input()
-  player_sprite! : string;
-  @Input()
-  enemy_sprite! : string;
+  // @Input()
+  // player_sprite! : string;
+  // @Input()
+  // enemy_sprite! : string;
 
   clic : number = 0;
 
@@ -42,12 +42,12 @@ export class ClickComponent implements OnInit, OnChanges, OnDestroy {
     //this.clickEvent.emit( this.clic );
 
     clearInterval(this.timer);
-    if (changes['enemy'])
+    if (changes['enemy'] || changes['pokePlayer'])
       this.ngOnInit();
   }
   ngOnInit(): void {
     this.enemy_life = this.enemy.hp;
-    this.player_life = this.player.hp;
+    this.player_life = this.pokePlayer.hp;
     //this.clickEvent.emit( this.clic );
     this.clic = 0;
     this.gameStarted = false;
@@ -85,7 +85,7 @@ export class ClickComponent implements OnInit, OnChanges, OnDestroy {
     if (this.enemy_life <= 0) {
       this.gameStarted = false;
       this.gameFinished = true;
-      this.player.setXp = this.clic;
+      this.pokePlayer.setXp = this.clic;
       this.clickEvent.emit( this.clic );
       this.endFight.emit("win");
       this.clic = 0;
@@ -110,13 +110,13 @@ export class ClickComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   damageCalculator() : number{
-    // console.log("p.level : "+this.player.level);
-    // console.log("p.spd : "+this.player.spd);
-    // console.log("p.atk : "+this.player.atk);
+    // console.log("p.level : "+this.pokePlayer.level);
+    // console.log("p.spd : "+this.pokePlayer.spd);
+    // console.log("p.atk : "+this.pokePlayer.atk);
     // console.log("e.def : "+this.enemy.def);
-    // console.log("p.level : "+this.player.level);
+    // console.log("p.level : "+this.pokePlayer.level);
     // src: https://bulbapedia.bulbagarden.net/wiki/Damage
-    return ((((((2 * this.player.level * this.criticalCalculator(this.player.spd)) / 5) + 2) * this.player.atk / this.enemy.def) / 50) + 0.5) // * stab( 1 , 1.5 ) * type1( 0.5 , 1 , 2 ) * type2( 0.5 , 1 , 2 )
+    return ((((((2 * this.pokePlayer.level * this.criticalCalculator(this.pokePlayer.spd)) / 5) + 2) * this.pokePlayer.atk / this.enemy.def) / 50) + 0.5) // * stab( 1 , 1.5 ) * type1( 0.5 , 1 , 2 ) * type2( 0.5 , 1 , 2 )
   }
 
   criticalCalculator(speed : number) : number {

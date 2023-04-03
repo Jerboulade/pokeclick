@@ -13,10 +13,5 @@ export class GameComponent {
   starter! : pokemonForm | undefined;
   animate : boolean = false
 
-  constructor(private _serv : MemoryCardService, private _launcher : LauncherService) {
-    this.starter = _serv.getAnyPokemonByUserId(_launcher.getUserToken);
-    console.log(this.starter);
-    this.animate = true;
-
-  }
+  constructor() {}
 }

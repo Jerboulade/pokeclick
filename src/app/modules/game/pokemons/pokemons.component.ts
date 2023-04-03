@@ -16,8 +16,14 @@ import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
 export class PokemonsComponent {
 
 
-  pokemons : pokemonForm[] | undefined = [];
+  userPokemon : pokemonForm[] = [];
   pokeFormSelected! : pokemonForm;
+
+  pokeFriendIds : string[] = [];
+  pokeFriend : pokemonForm[] = [];
+  friendIsSelected : boolean = false;
+  friendIndexSelected : number = -1;
+
   poke : pokeListItem[] = []
   selectedPoke! : pokeListItem;
   trig : boolean = false;
@@ -26,46 +32,12 @@ export class PokemonsComponent {
   return this.pokeFormSelected;
  }
 
- get getPokemons() {
-  return this.pokemons;
- }
-
   constructor( private _pokeService : PokeService, private _laucher : LauncherService, private _mapper : PokemapperService, private _serv :  MemoryCardService) {
-    // this.pokemons = _pokeService.getUserPokemons(_laucher.getUserToken);
-    // for(let p of this.pokemons!){
-    //   this.poke.push(this._pokeService.getListItemByOrder(p.order)!)
-    // }
-    let tests : number[] = [150, 1, 19, 42, 198, 740, 740];
-    _serv.getUserPokemons(_laucher.getUserToken)?.forEach((p) => {
-      this.pokemons?.push(p);
-    })
-    // tests.forEach((order) => {
-    //   // console.log(order + " in loop");
-    //   _pokeService.getPokemonDTOByOrder(order)?.subscribe({
-    //     next : (data : pokemonDTO) => {
-    //       console.log(data);
-    //       //this.player_sprite = data.sprites.front_default;
-    //       this.pokemons?.push(_mapper.dtoToForm(data));
-    //       if (this.pokemons?.length === 1){
-    //         // console.log("coucou");
-    //         // console.log(this.pokemons[0]);
-    //         this.pokeFormSelected = this.pokemons[0];
-    //       }
-    //       // console.log(order + "order in sub");
-    //       // console.log(data.order + "data order in sub");
-    //       // console.log(_mapper.dtoToForm(data));
-    //     }
-    //   });
-    // })
 
-    //this.poke.push(this._pokeService.getListItemByOrder(_serv.getAnyPokemonByUserId(_laucher.getUserToken)!.order)!)
-    // this.poke.push(this._pokeService.getListItemByOrder(150)!)
-    // this.poke.push(this._pokeService.getListItemByOrder(1)!)
-    // this.poke.push(this._pokeService.getListItemByOrder(19)!)
-    // this.poke.push(this._pokeService.getListItemByOrder(42)!)
-    // this.poke.push(this._pokeService.getListItemByOrder(198)!)
-    // this.poke.push(this._pokeService.getListItemByOrder(740)!)
-    // this.poke.push(this._pokeService.getListItemByOrder(740)!)
+    this.userPokemon = _pokeService.getUserPokemons(_laucher.getUserToken);
+    this.pokeFriendIds = _laucher.getUser().activePokemons;
+    this.pokeFriendIds.forEach(id => this.pokeFriend.push(this.userPokemon.find(poke => poke.getId == id)!))
+    this.pokeFormSelected = this.userPokemon[0];
     this.trig = true;
   }
 
@@ -76,6 +48,35 @@ export class PokemonsComponent {
 
   select(pokemon : pokemonForm){
     this.pokeFormSelected = pokemon;
+  }
+
+  selectFriend(index : number) {
+    if (!this.friendIsSelected) {
+      this.friendIsSelected = true;
+      this.friendIndexSelected = index;
+    }
+    else if (this.friendIsSelected && this.friendIndexSelected == index) {
+      this.friendIsSelected = false;
+      this.friendIndexSelected = -1;
+    }
+    else {
+      this.friendIndexSelected = index;
+    }
+  }
+
+  chooseFriend(id : string) {
+    if (!this.pokeFriendIds.includes(id)) {
+      this.pokeFriendIds[this.friendIndexSelected] = id;
+      this.pokeFriend[this.friendIndexSelected] = this.userPokemon.find(p => p.getId == id)!;
+      this._pokeService.updateActivePokemonByIndex(this._laucher.getUserToken, id, this.friendIndexSelected)
+      this.friendIsSelected = false;
+      this.friendIndexSelected = -1;
+
+    }
+  }
+
+  isFriend(id : string) : boolean{
+    return this.pokeFriendIds.includes(id)
   }
 
 }

@@ -1,7 +1,9 @@
-<div class="container" style="padding: 60px;">
+<div class="pokedex_container" style="padding: 60px;">
 
+  <img style="height: 100px; width: 100px;" src="/assets/trainer_male.png">
+  <img style="height: 100px; width: 100px;"src="/assets/trainer_female.png">
   <div *ngFor="let p of pokeList">
-    <app-pokemon-card [pokemon]="p"></app-pokemon-card>
+    <app-pokemon-card *ngIf="p.order < 10" [pokemon]="p"></app-pokemon-card>
   </div>
 
 </div>

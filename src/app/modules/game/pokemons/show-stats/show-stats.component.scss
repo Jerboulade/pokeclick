@@ -3,12 +3,13 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  position: absolutes;
+  // position: absolutes;
+  image-rendering: pixelated;
 }
 
 .item {
   display: flex;
-  /* height: 129%; */
+  padding: 20px;
   align-items: center;
   justify-content: center;
   flex-direction: column;

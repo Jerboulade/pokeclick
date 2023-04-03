@@ -1,19 +1,27 @@
-<div class="component-container" style="padding: 60px;">
-  <div class="other-container">
-    <!-- <p>other-container</p> -->
-    <!-- <app-pokemon-card [pokemon]="selectedPoke"></app-pokemon-card> -->
-    <app-show-stats *ngIf="getPokemonForm" [pokemon]="getPokemonForm"></app-show-stats>
+<div class="component-container">
 
-  </div>
-  <!-- <div *ngIf="trig" class="pokemons-container">
-    <div class="pokemon"  *ngFor="let p of getPoke">
-      <app-pokemon-card [pokemon]="p"></app-pokemon-card>
+  <div class="friend-container">
+    <!-- <p>{{friendIsSelected}}</p>
+    <p>{{friendIndexSelected}}</p>
+    <p>{{pokeFriendIds[0]}}</p>
+    <p>{{pokeFriendIds[1]}}</p>
+    <p>{{pokeFriendIds[2]}}</p> -->
+
+    <div *ngFor="let i of [0,1,2]" class="friend-item" [style]="friendIndexSelected == i ? 'background-color: greenyellow;' : ''" (click)="selectFriend(i)" >
+      <img *ngIf="!pokeFriend[i]" src="assets/0.png">
+      <img *ngIf="pokeFriend[i]" [src]="pokeFriend[i].sprite_front">
     </div>
-  </div> -->
+  </div>
+
+  <div class="other-container">
+    <app-show-stats *ngIf="!friendIsSelected" [pokemon]="getPokemonForm"></app-show-stats>
+    <p *ngIf="friendIsSelected"> Choose friend </p>
+  </div>
+
 
   <div *ngIf="trig" class="pokemons-container">
-    <div class="pokemon"  *ngFor="let pok of getPokemons">
-      <app-pokemon-form-card [pokemon]="pok" (click)="select(pok)"></app-pokemon-form-card>
+    <div *ngFor="let pok of userPokemon" [class]="isFriend(pok.getId) ? 'is-friend' : 'pokemon'">
+      <app-pokemon-form-card [pokemon]="pok" (click)="!friendIsSelected ? select(pok) : chooseFriend(pok.getId)"></app-pokemon-form-card>
     </div>
   </div>
 

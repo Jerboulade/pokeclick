@@ -1,12 +1,20 @@
-table{
-  border-spacing: 1ch;
-  //font-size: xx-large;
+.menu{
+  display: flex;
+  flex-direction: column;
+  /* border-spacing: 1ch; */
   width: 100%;
-  padding-top: 5%;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  /* padding-top: 5%; */
   text-align: center;
-  //min-height: auto;
 }
-tr:hover{
+
+.menu-item{
+  padding: 10px;
+}
+
+.menu-item:hover{
   //border: 10%;
   text-decoration: underline;
   cursor: pointer;

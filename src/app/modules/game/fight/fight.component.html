@@ -7,7 +7,8 @@
 <div class="fight-container">
   <p>click in parent : {{clicInParent}}</p>
   <p>fight result : {{fightResult}}</p>
-  <app-click  (clickEvent)="onChildClick($event)" (endFight)="endFightResult($event)"   [player_sprite]="poke.sprite_back" [enemy_sprite]="poke2.sprite_front" [player]="poke" [enemy]="poke2" ></app-click>
+  <app-click  (clickEvent)="onChildClick($event)" (endFight)="endFightResult($event)"  [pokePlayer]="poke" [enemy]="poke2" ></app-click>
+  <!-- [player_sprite]="poke.sprite_back" [enemy_sprite]="poke2.sprite_front" -->
 </div>
 <div class="rand-pokemon-container">
   <div *ngFor="let randPoke of randomPokeList">

@@ -1,0 +1,51 @@
+.profile-container {
+  width : 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+}
+
+.profile-row {
+  width : 100%;
+  display: flex;
+  flex-direction: row;
+  // padding: 60px;
+  justify-content: center;
+}
+
+.identity-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #e7e7e7;
+  padding: 10px;
+  align-items: center;
+  max-width: 300px;
+  // line-break: anywhere;
+  text-align: center;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f2f2f2;
+  width: 100%;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout {
+  text-align: center;
+  padding-top: 60px;
+  font-family: "Lato", cursive;
+
+}
+
+.data {
+  width : 100%;
+  background-color: #f2f2f2;
+  padding: 60px;
+  display: flex;
+  flex-direction: row;
+  line-break: anywhere;
+}

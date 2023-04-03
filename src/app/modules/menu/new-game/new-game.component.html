@@ -1,30 +1,56 @@
 <div class="screen_border">
   <div class="screen_container">
     <div class="pc_seablue">
-      <p>new-game works!</p>
-      <form *ngIf="formIsVisible" [formGroup]="form">
-        <table>
-          <tr>
-            <td><label>Pseudo</label></td>
-            <td><input type="text" formControlName="pseudo">
-            </td>
-          </tr>
-          <tr>
-            <td><label>Secret key</label></td>
-            <td><input type="password"  formControlName="key"></td>
-          </tr>
-          <tr>
-            <td><label>check</label></td>
-            <td><input type="checkbox" formControlName="condition"></td>
-          </tr>
-        </table>
-        <button (click)="launch()">submit</button>
-      </form>
-      <form >
-        <td><a (click)="submitStarter(0)">{{starterItemList[0].name}}</a><app-pokemon-card [pokemon]="starterItemList[0]"></app-pokemon-card></td>
-        <td><a (click)="submitStarter(1)">{{starterItemList[1].name}}</a><app-pokemon-card [pokemon]="starterItemList[1]"></app-pokemon-card></td>
-        <td><a (click)="submitStarter(2)">{{starterItemList[2].name}}</a><app-pokemon-card [pokemon]="starterItemList[2]"></app-pokemon-card></td>
-      </form>
+      <div *ngIf="formIsVisible" class="form-container">
+        <div class="form-container-item">
+          <form  [formGroup]="form" (ngSubmit)="launch()">
+            <table>
+              <tr>
+                <td><label>Pseudo</label></td>
+                <td><input type="text" formControlName="pseudo">
+                </td>
+              </tr>
+              <tr>
+                <td><label>Secret key</label></td>
+                <td><input type="password"  formControlName="key"></td>
+              </tr>
+              <tr>
+                <td><label>Gender</label></td>
+                <td>
+                  <select formControlName="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="unknown">Unknown</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><label>check</label></td>
+                <td><input type="checkbox" formControlName="condition"></td>
+              </tr>
+            </table>
+            <button type="submit" [disabled]="!form.valid">submit</button>
+          </form>
+        </div>
+        <div class="form-container-item">
+          <div class="form-gender-img" *ngIf="[form.get('gender') != null]">
+            <!-- <p>{{form.get('gender')!.value}}</p> -->
+            <img class="form-gender-img2" *ngIf="form.get('gender')!.value == 'male'" src="/assets/trainer_male.png">
+            <img class="form-gender-img2" *ngIf="form.get('gender')!.value == 'female'" src="/assets/trainer_female.png">
+            <img class="form-gender-img2" *ngIf="form.get('gender')!.value == 'unknown'" class="image-float" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201-question.png">
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="starter-container"  *ngIf="starterIsVisible && !formIsVisible">
+        <div (click)="submitStarter(0)" class="starter-item"><app-pokemon-card [pokemon]="starterItemList[0]"></app-pokemon-card></div>
+        <div (click)="submitStarter(1)" class="starter-item"><app-pokemon-card [pokemon]="starterItemList[1]"></app-pokemon-card></div>
+        <div (click)="submitStarter(2)" class="starter-item"><app-pokemon-card [pokemon]="starterItemList[2]"></app-pokemon-card></div>
+      </div>
+
+
       <div *ngIf="!starterIsVisible && !formIsVisible">
         <app-pokemon-card [pokemon]="starter"></app-pokemon-card>
       </div>

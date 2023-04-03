@@ -1,7 +1,13 @@
 <div class="screen_border">
   <div class="screen_container">
     <div class="pc_seablue">
-      <p>Load game works!</p>
+      <div class="load">
+        <p>Load your game here!</p>
+        <textarea [(ngModel)]="data" rows="20" cols="50"> </textarea>
+      </div>
+      <div style="text-align: center;">
+        <button style="align-self: center;" (click)="data.length > 0 ? loadGame() : ''">Load</button>
+      </div>
     </div>
   </div>
 </div>

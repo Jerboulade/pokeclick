@@ -1,42 +1,45 @@
 <div class="pokemon-container">
+
   <div class="item">
     <p>{{clic}}</p>
   </div>
-  <div class="item" style="padding-left: 10%;">
+
+  <div class="item" style="padding-left: 20%;">
 
     <div class="item-item" >
       <div *ngIf="!enemy" class="what">
-        <p  >?</p>
+        <p >?</p>
       </div>
-      <img draggable="false" *ngIf="enemy" [ngClass]="{ defeated: enemy_life == 0 }" class="pokemon-container-img" [src]="enemy.sprite_front" (click)="gameStarted && !gameFinished ? dealDamage($event) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
+      <img draggable="false" *ngIf="enemy" [ngClass]="{ defeated: enemy_life == 0 }" class="pokemon-container-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/{{enemy.order}}.gif" (click)="gameStarted && !gameFinished ? dealDamage($event) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
     </div>
 
     <div class="item-item">
       <div class="life-container">
-        <div class="life-bar" [style.height.%]="getLifePercentage()"></div>
+        <div [ngClass]="{ 'life-bar2': enemy_life < enemy.hp }" class="life-bar" [style.width.%]="getLifePercentage()"></div>
       </div>
-      <div *ngIf="enemy_life" class="life">{{ enemy_life | number : '.0-0' }}</div>
+      <div *ngIf="enemy_life" class="life">{{ enemy_life | number : '.0-0' }}/{{enemy.hp}}</div>
     </div>
 
   </div>
 
   <div class="item">
+    <!-- <img src="/assets/0.png"> -->
     <button *ngIf="enemy_life < enemy.hp / 2" (click)="catch()">catch</button>
     <button *ngIf="!gameStarted && !gameFinished" (click)="startGame()">Start</button>
   </div>
 
 
-  <div class="item" style="padding-right: 10%;">
+  <div class="item" style="padding-right: 20%;">
 
     <div class="item-item" >
-      <img draggable="false" *ngIf="player" class="pokemon-container-img" [src]="player.sprite_back? player.sprite_back : player.sprite_front">
+      <img draggable="false" *ngIf="pokePlayer" class="pokemon-container-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/{{pokePlayer.order}}.gif">
     </div>
 
     <div class="item-item">
       <div class="life-container">
         <div class="life-bar" [style.height.%]=100></div>
       </div>
-      <div *ngIf="player_life" class="life">{{ player_life | number : '.0-0' }}</div>
+      <div *ngIf="player_life" class="life">{{ player_life | number : '.0-0' }}/{{pokePlayer.hp}}</div>
     </div>
 
   </div>

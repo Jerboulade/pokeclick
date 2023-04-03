@@ -5,6 +5,7 @@ import { pokeListItem } from '../../models/pokeListItem';
 import { pokemonForm } from '../../models/pokemonForm';
 import { pokemonDTO } from '../../models/pokemonDTO';
 import { Observable } from 'rxjs';
+import { Trainer } from '../../models/trainer';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class PokeService{
     console.log("init pokeservice");
     console.log("GET pokelist ");
     let i = 1;
-    this._http.get<any>(this.pokeURL + "pokemon?limit=1010&offset=0").subscribe({
+    this._http.get<any>(this.pokeURL + "pokemon?limit=650&offset=0").subscribe({
       next : (data) => {
         this.pokeList = data.results as pokeListItem[],
         //console.log("res");
@@ -50,7 +51,7 @@ export class PokeService{
   }
 
   getPokemonDTOByOrder(order : number) : pokemonDTO | Observable<pokemonDTO> | undefined {
-    if ( order <= 0 || order > 1010)
+    if ( order <= 0 || order > 650)
       return ;
     console.log("order in getPokemonDTOByOrder : "+ order);
     let pokemon : pokemonDTO | undefined = this.pokedex.find( pk => pk.order == order );
@@ -68,7 +69,15 @@ export class PokeService{
     this._serv.updatePokemon(token, form);
   }
 
-  getUserPokemons(token : string) : pokemonForm[] | undefined {
+  getUserPokemons(token : string) : pokemonForm[] {
     return this._serv.getUserPokemons(token);
+  }
+
+  updateActivePokemonByIndex(userToken : string, pokemonId : string, index : number) {
+    this._serv.updateActivePokemonByIndex(userToken, pokemonId, index);
+  }
+
+  getUserActivePokemon(userToken : string) : pokemonForm[] {
+     return this._serv.getUserActivePokemon(userToken);
   }
 }

@@ -2,12 +2,25 @@
   <div class="screen_container">
     <div class="pc_seablue">
       <br>
-      <table>
-        <tr routerLink="newgame">NEW GAME</tr>
-        <tr routerLink="loadgame">LOAD GAME</tr>
-        <tr routerLink="clicker">CliCkER</tr>
-        <tr >CONTINUE</tr>
-      </table>
+      <div class="menu">
+
+        <div class="menu-item">
+          <div routerLink="newgame">NEW GAME</div>
+        </div>
+
+        <div class="menu-item">
+          <div routerLink="loadgame">LOAD GAME</div>
+        </div>
+
+        <!-- <div class="menu-item">
+          <div routerLink="clicker">CliCkER</div>
+        </div> -->
+
+        <!-- <div class="menu-item">
+          <div routerLink="game">CONTINUE</div>
+        </div> -->
+
+      </div>
       <router-outlet></router-outlet>
     </div>
   </div>

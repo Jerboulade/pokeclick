@@ -1,154 +1,168 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Trainer } from '../../models/trainer';
 import { pokemonForm } from '../../models/pokemonForm';
+import { PokemapperService } from '../mapper/pokemapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MemoryCardService implements OnInit, OnDestroy {
-//server
 
-  server : Trainer[] = []
+  /* This servive simulate the server side by storing data in localStorage */
 
-  constructor() { }
+  constructor(private _mapper : PokemapperService) {}
+
   ngOnDestroy(): void {
     console.log("Mem Destroy");
   }
+
   ngOnInit(): void {
     console.log("Mem Init");
   }
+
   createUser(form : any) : string{
     let user : Trainer = {
-      id : (Math.random() * 10000).toString() as string,
+      id : (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)+"-"+ (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)+"-"+ (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1),
       pseudo : form.pseudo as string,
+      gender : form.gender as string,
       key : form.key as string,
       token : "bearer_",
       pokemons : [] as pokemonForm[],
-      activePokemons : [] as pokemonForm[],
+      activePokemons : [] as string[],
+      clic : 0,
+      pokeball : 0
     }
     user.token += user.id; // create/get? user token
-    this.server.push(user);
     console.log("Server create token : " + user.token);
-    localStorage.setItem('user', JSON.stringify(user)) // TEST LOCAL STORAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    localStorage.setItem('user', JSON.stringify(user))
     return user.token;
   }
 
-  getUser(form : any) : string {
-    let user : Trainer | undefined = this.server.find(u => u.id == form.id && u.key == form.key)
-    if (!user){
-      user = JSON.parse(localStorage.getItem('user')!);  // TEST LOCAL STORAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      if (!user)
-        return ("User not found");
-    }
+  getUserToken(form : any) : string {
+    let user = JSON.parse(localStorage.getItem('user')!);
+    if (!user)
+      return ("User not found");
     return user.token // create the token in API before
   }
 
-  updatePokemon(userToken : string, pokemon : pokemonForm) : string{
+  getUser() : Trainer {
+    let user : Trainer = JSON.parse(localStorage.getItem('user')!);
+    return user; // create the token in API before
+  }
 
-    let user : Trainer | undefined =  this.server.find(user => user.token == userToken);
-    if (!user)
-      user = JSON.parse(localStorage.getItem('user')!);  // TEST LOCAL STORAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    if (user){
-      let pokeToUp : pokemonForm | undefined = user.pokemons.find(p => p.getId == pokemon.getId)
-      if (!pokeToUp)
-        user.pokemons.push(pokemon);
-      else{
-        user.pokemons.splice(user.pokemons.indexOf(pokeToUp), 1, pokemon)
+  updateUser(user : Trainer) {
+    localStorage.removeItem('user')
+    localStorage.setItem('user', JSON.stringify(user))
+  }
+
+  updateActivePokemonByIndex(userToken : string, pokemonId : string, index : number) {
+    let user : Trainer = this.getUser();
+    // if (!user) --> redirect to signup;
+    user.activePokemons.splice(index, 1, pokemonId);
+    this.updateUser(user);
+  }
+
+  updatePokemon(userToken : string, pokemon : pokemonForm){
+    let user = this.getUser();
+    this._mapper.addMethodToRawPokemon(user.pokemons);
+    let pokeToUp : pokemonForm | undefined = user.pokemons.find((p : pokemonForm) => p.getId == pokemon.getId)
+    if (!pokeToUp)
+      user.pokemons.push(pokemon);
+    else
+      user.pokemons.splice(user.pokemons.indexOf(pokeToUp), 1, pokemon)
+    this.updateUser(user);
+  }
+
+  getUserActivePokemon(token : string) : pokemonForm[] {
+    let user = this.getUser();
+    let activePokemons : pokemonForm[] = [];
+    this._mapper.addMethodToRawPokemon(user.pokemons);
+    user.activePokemons.forEach(id => activePokemons.push(user.pokemons.find(poke => poke.getId == id)!))
+    return activePokemons;
+  }
+
+  getUserPokemons(token : string) : pokemonForm[] {
+    let user = this.getUser();
+    this._mapper.addMethodToRawPokemon(user.pokemons)
+    return user.pokemons;
+  }
+
+  emptyLocalStorage() {
+    localStorage.clear();
+  }
+
+  getDataToString() : string {
+    return (this.encrypt(JSON.stringify(localStorage.getItem('user')!)))
+  }
+
+  encrypt(message: string): string {
+    let result = '';
+
+    for (let i = 0; i < message.length; i++) {
+      const ascii = message.charCodeAt(i);
+      let base6 = ascii.toString(6);
+      while (base6.length < 3) {
+        base6 = '0' + base6;
       }
-      localStorage.removeItem('user') // TEST LOCAL STORAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      localStorage.setItem('user', JSON.stringify(user)) // TEST LOCAL STORAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-      return "Pokemon updated";
+      for (let j = 0; j < base6.length; j++) {
+        const digit = Number.parseInt(base6.charAt(j), 6);
+        switch (digit) {
+          case 0:
+            result += '>';
+            break;
+          case 1:
+            result += '<';
+            break;
+          case 2:
+            result += '+';
+            break;
+          case 3:
+            result += '-';
+            break;
+          case 4:
+            result += '[';
+            break;
+          case 5:
+            result += ']';
+            break;
+        }
+      }
     }
-    return "User not found";
+    return result;
   }
 
-  getAnyPokemonByUserId(token : string) : pokemonForm | undefined{
-    let user : Trainer | undefined = this.server.find(user => user.token == token);
-    if (!user)
-      user = JSON.parse(localStorage.getItem('user')!);  // TEST LOCAL STORAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    console.log(user);
-    return user?.pokemons.find(p => p.order == 1 || p.order == 4 || p.order == 7);
-  }
-
-
-
-  getUserPokemons(token : string) : pokemonForm[] | undefined {
-    let user : Trainer | undefined = this.server.find(user => user.token == token);
-    if (!user){
-      user = JSON.parse(localStorage.getItem('user')!);  // TEST LOCAL STORAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      console.log(user?.pokemons);
-      user?.pokemons.forEach((poke) => {
-        Object.defineProperties(poke, {
-          'getId': {
-            get: function() { return this.id; }
-          },
-          'getXp': {
-            get: function() { return this.xp; }
-          },
-          'level': {
-            get: function() { let level =  this.xpTable.findIndex((elem : number) => elem >= this.xp)
-              if (this.xp == this.xpTable[level])
-                level++;
-              return level; }
-          },
-          'setXp': {
-            set: function(value: number) { if ( this.xp + value > 1250000 )
-              this.xp = 1250000 - value;
-            this.xp += value; }
-          },
-          'setEV_hp': {
-            set: function(value: number) { this.hp_EV += value;
-              if (this.hp_EV > 65535)
-                this.hp_EV = 65535; }
-          },
-          'setEV_atk': {
-            set: function(value: number) { this.atk_EV += value;
-              if (this.atk_EV > 65535)
-              this.atk_EV = 65535; }
-          },
-          'setEV_def': {
-            set: function(value: number) { this.def_EV += value;
-              if (this.def_EV > 65535)
-              this.def_EV = 65535; }
-          },
-          'setEV_spd': {
-            set: function(value: number) { this.spd_EV += value;
-              if (this.spd_EV > 65535)
-              this.spd_EV = 65535; }
-          },
-          'setEV_spec': {
-            set: function(value: number) { this.spec_EV += value;
-              if (this.spec_EV > 65535)
-              this.spec_EV = 65535; }
-          },
-          'hp' : {
-            get: function() { return this.statCalculation('hp', this.hp_base, this.hp_IV, this.hp_EV);  }
-          },
-          'atk' : {
-            get: function() { return this.statCalculation('atk', this.atk_base, this.atk_IV, this.atk_EV);  }
-          },
-          'def' : {
-            get: function() { return this.statCalculation('def', this.def_base, this.def_IV, this.def_EV);  }
-          },
-          'spd' : {
-            get: function() { return this.statCalculation('spd', this.spd_base, this.spd_IV, this.spd_EV);  }
-          },
-          'spec_atk' : {
-            get: function() { return this.statCalculation('spec_atk', this.specAtk_base, this.spec_IV, this.spec_EV);  }
-          },
-          'spec_def' : {
-            get: function() { return this.statCalculation('spec_def', this.specDef_base, this.spec_IV, this.spec_EV);  }
-          },
-          'statCalculation': {
-            value: function(name: string, base: number, iv: number, ev: number): number {
-              return Math.floor((((base + iv) * 2 + Math.floor((Math.ceil(Math.sqrt(ev))) / 4)) * this.level) / 100) + (name == 'hp' ? this.level + 10 : 5);
-            }
-          }
-        });
-      })
+  decrypt(message: string): string {
+    let result = '';
+    const groups = message.match(/.{1,3}/g) ?? [];
+    for (let i = 0; i < groups.length; i++) {
+      const group = groups[i];
+      let base6 = '';
+      for (let j = 0; j < group.length; j++) {
+        const char = group.charAt(j);
+        switch (char) {
+          case '>':
+            base6 += '0';
+            break;
+          case '<':
+            base6 += '1';
+            break;
+          case '+':
+            base6 += '2';
+            break;
+          case '-':
+            base6 += '3';
+            break;
+          case '[':
+            base6 += '4';
+            break;
+          case ']':
+            base6 += '5';
+            break;
+        }
+      }
+      const ascii = parseInt(base6, 6);
+      result += String.fromCharCode(ascii);
     }
-    return user?.pokemons;
-
+    return result;
   }
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { pokeListItem } from 'src/app/shared/models/pokeListItem';
 import { pokemonDTO } from 'src/app/shared/models/pokemonDTO';
 import { pokemonForm } from 'src/app/shared/models/pokemonForm';
+import { Trainer } from 'src/app/shared/models/trainer';
 import { LauncherService } from 'src/app/shared/services/launcher/launcher.service';
 import { PokemapperService } from 'src/app/shared/services/mapper/pokemapper.service';
 import { PokeService } from 'src/app/shared/services/pokeService/poke.service';
@@ -24,6 +25,7 @@ constructor(private _formBuilder : FormBuilder,
 form : FormGroup = this._formBuilder.group({
   pseudo : ['', [Validators.required]],
   key : ['', [Validators.required]],
+  gender : ['unknown', [Validators.required]],
   condition : [false, [Validators.requiredTrue]]
 })
 
@@ -32,9 +34,10 @@ starterIsVisible : boolean = false;
 starters : number[] = [1, 4, 7]; // starter's order list
 starterItemList : pokeListItem[] = [];
 starter! : pokeListItem;
+newUser! : Trainer;
 
 launch(){
-  this._launcherService.signUp(this.form.getRawValue());
+  this.newUser =  this._launcherService.signUp(this.form.getRawValue());
   this.formIsVisible = false;
   this.starters.forEach(order => {
     let item : pokeListItem | undefined = this._pokeService.getListItemByOrder(order);
@@ -52,11 +55,12 @@ submitStarter(choiceIndex : number){
     next : (data : pokemonDTO) => {
       console.log("SUBMIT STARTER" + data.name);
       let startPok = this._mapper.dtoToForm(data)
-      this._pokeService.postPokemonForm(this._launcherService.getUserToken, startPok);
+      this._pokeService.postPokemonForm(this.newUser.token, startPok);
+      this._pokeService.updateActivePokemonByIndex(this.newUser.token, startPok.getId, 0);
       this.starter = this.starterItemList[choiceIndex];
       // use laucher to check user info + ... (√)
       this.starterIsVisible = false;
-      this._router.navigate(['/game']);
+      this._router.navigate(['/game']); //, this._launcherService.getUserToken
     }
   })
 

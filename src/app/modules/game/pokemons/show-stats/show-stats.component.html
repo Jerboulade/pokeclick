@@ -7,7 +7,8 @@
     <p> Xp : {{ pokemon.getXp }} </p>
   </div>
   <div class="item" >
-    <img src="{{pokemon.sprite_front}}" style="height: 200px; width: 200px;">
+    <img *ngIf="front" (click)="front = !front" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/{{pokemon.order}}.gif" style="height: 100px;">
+    <img *ngIf="!front" (click)="front = !front" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/{{pokemon.order}}.gif" style="height: 100px;">
   </div>
   <div class="item" >
     <p> HP  : {{ pokemon.hp }} </p>

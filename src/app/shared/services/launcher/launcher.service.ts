@@ -15,16 +15,21 @@ export class LauncherService {
     return this.connectedAs;
   }
 
+  get isConnect() : boolean{
+    return this.isConnected;
+    //return localStorage.getItem('token') != undefined;
+  }
+
   constructor( private _serv : MemoryCardService ) { }
 
-  signUp(form : any) : string{
+  signUp(form : any) : Trainer{
     this.connectedAs = this._serv.createUser(form)
     localStorage.setItem('token', this.connectedAs);
-    return this.connectedAs;
+    return this._serv.getUser();
   }
 
   login(form : any){
-    this.connectedAs = this._serv.getUser(form)
+    this.connectedAs = this._serv.getUserToken(form)
     localStorage.setItem('token', this.connectedAs);
     this.isConnected = true;
   }
@@ -33,12 +38,14 @@ export class LauncherService {
     this.connectedAs = '';
     localStorage.removeItem('token')
     this.isConnected = false;
+    this._serv.emptyLocalStorage();
   }
 
-  get isConnect() : boolean{
-    return this.isConnected;
-    //return localStorage.getItem('token') != undefined;
+  getUser() : Trainer {
+    return this._serv.getUser();
   }
+
+
 
 
 }

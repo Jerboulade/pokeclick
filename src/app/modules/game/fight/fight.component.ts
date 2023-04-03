@@ -21,15 +21,12 @@ clicInParent : number = 0;
 fightResult : string = "";
 randomTimer : any;
 
-constructor(private _pokeService : PokeService, private _serv : MemoryCardService, private _mapper : PokemapperService, private _launcher : LauncherService){
+constructor(private _pokeService : PokeService, private _mapper : PokemapperService, private _launcher : LauncherService){
 
-  this.userPokemons = _serv.getUserPokemons(_launcher.getUserToken)!
-  _pokeService.getPokemonDTOByOrder(3)?.subscribe({
-    next : (data : pokemonDTO) => {
-      this.poke = _mapper.dtoToForm(data);
-    }
-  })
-  _pokeService.getPokemonDTOByOrder(6)?.subscribe({
+  this.userPokemons = _pokeService.getUserActivePokemon(_launcher.getUserToken)!
+  this.poke = this.userPokemons[0];
+
+  _pokeService.getPokemonDTOByOrder(Math.ceil(Math.random() * 650))?.subscribe({
     next : (data : pokemonDTO) => {
       this.poke2 = _mapper.dtoToForm(data);
       this.randomPokeList.push(this.poke2);
@@ -39,7 +36,7 @@ constructor(private _pokeService : PokeService, private _serv : MemoryCardServic
 
   this.randomTimer = setInterval(() => {
     if (this.randomPokeList.length < 3){
-      let rand : number = Math.ceil(Math.random() * 1000);
+      let rand : number = Math.ceil(Math.random() * 650);
     console.log(rand);
     _pokeService.getPokemonDTOByOrder(rand)?.subscribe({
       next : (data : pokemonDTO) => {
@@ -56,8 +53,10 @@ constructor(private _pokeService : PokeService, private _serv : MemoryCardServic
 
 endFightResult(event : any){
   this.fightResult = event;
-  if (this.fightResult == "win" && this.randomPokeList.find(i => i == this.poke2))
+  if (this.fightResult == "win" && this.randomPokeList.find(i => i == this.poke2)){
+    this._pokeService.postPokemonForm(this._launcher.getUserToken ,this.poke)
     this.randomPokeList.splice(this.randomPokeList.indexOf(this.poke2), 1);
+  }
   else if (this.fightResult == "catch"  && this.randomPokeList.find(i => i == this.poke2)){
     this._pokeService.postPokemonForm(this._launcher.getUserToken, this.poke2)
     this.randomPokeList.splice(this.randomPokeList.indexOf(this.poke2), 1);

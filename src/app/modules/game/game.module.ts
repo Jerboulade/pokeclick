@@ -9,6 +9,7 @@ import { GameBannerComponent } from './game-banner/game-banner.component';
 import { PokedexComponent } from './pokedex/pokedex.component';
 import { ShowStatsComponent } from './pokemons/show-stats/show-stats.component';
 import { FightComponent } from './fight/fight.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FightComponent } from './fight/fight.component';
     GameBannerComponent,
     PokedexComponent,
     ShowStatsComponent,
-    FightComponent
+    FightComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

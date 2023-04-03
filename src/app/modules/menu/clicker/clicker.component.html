@@ -2,16 +2,21 @@
 <div class="screen_border">
   <div class="screen_container">
     <div class="pc_seablue">
-      <div *ngIf="!fightStart" class="container" style="flex-direction: row;">
-        <input [(ngModel)]="pokePlayerIndex" (change)="getPokePlayer()" type="number" min="1" max="1008">
-        <img draggable="false" *ngIf="pokePlayer" [src]="pokePlayer.sprites.front_default">
+      <div class="clicker-container">
+        <div *ngIf="!fightStart" class="clicker-item">
+          <img draggable="false" *ngIf="pokePlayer" [src]="pokePlayer.sprites.front_default">
+          <input [(ngModel)]="pokePlayerIndex" (change)="getPokePlayer()" type="number" min="1" max="1008">
+        </div>
+        <div *ngIf="!fightStart" class="clicker-item">
+          <img draggable="false" *ngIf="pokeEnemy" [src]="pokeEnemy.sprites.front_default">
+          <input [(ngModel)]="pokeEnemyIndex" (change)="getPokeEnemy()" type="number" min="1" max="1008">
+        </div>
+        <div *ngIf="!fightStart" class="clicker-item">
+          <button *ngIf="!fightStart" (click)="fight()" >fight</button>
+        </div>
+        <app-click [pokePlayer]="player" [enemy]="enemy"  *ngIf="player && enemy && fightStart" ></app-click>
+        <!-- [player_sprite]="pokePlayer.sprites.back_default" [enemy_sprite]="pokeEnemy.sprites.front_default" -->
       </div>
-      <div *ngIf="!fightStart" class="container" style="flex-direction: row;">
-        <input [(ngModel)]="pokeEnemyIndex" (change)="getPokeEnemy()" type="number" min="1" max="1008">
-        <img draggable="false" *ngIf="pokeEnemy" [src]="pokeEnemy.sprites.front_default">
-      </div>
-      <button *ngIf="!fightStart" (click)="fight()" >fight</button>
-      <app-click [player]="player" [enemy]="enemy"  *ngIf="player && enemy && fightStart" [player_sprite]="pokePlayer.sprites.back_default" [enemy_sprite]="pokeEnemy.sprites.front_default"></app-click>
     </div>
   </div>
 </div>

@@ -1,0 +1,31 @@
+<div class="profile-container">
+
+  <div class="profile-row">
+
+    <div class="identity-container">
+      <img style="  width: 150px;" [src]="user_sprite">
+      <p> {{ user.pseudo }} </p>
+    </div>
+
+    <div class="info-container">
+      <p> Clics : {{ user.clic }} </p>
+      <p> Pokeball : {{ user.pokeball }} </p>
+      <p> Pokemon : {{ user.pokemons.length }} </p>
+    </div>
+
+  </div>
+
+  <div class="profile-row">
+    <div class="logout">
+      <button *ngIf="!logout" (click)="logout = true">Log out</button>
+      <p *ngIf="logout">Warning : by logging out, you will empty your cache. Copy the code below if you want to keep your progression. You can load it via the main menu.</p>
+      <button *ngIf="logout" (click)="logOut()">Roger!</button>
+      <button *ngIf="logout" (click)="logout = false">Nope</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="data">
+  {{ data }}
+</div>
