@@ -1,8 +1,31 @@
+
+.component-container {
+display: flex;
+flex-direction: column;
+margin: auto;
+padding: 60px;
+
+}
+
+
 .pokedex_container {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   /* min-height: 100%; */
-  margin: auto;
   align-items: center;
+  // padding: 60px;
 }
+
+button {
+  background-color: lightgray;
+  font-size: 1rem;
+  color: white;
+  // border: solid;
+  // border-radius: 5px;
+  width: 150px;
+  margin: auto;
+  padding: 0.5rem;
+}
+
+

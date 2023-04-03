@@ -10,7 +10,7 @@
       <div *ngIf="!enemy" class="what">
         <p >?</p>
       </div>
-      <img draggable="false" *ngIf="enemy" [ngClass]="{ defeated: enemy_life == 0 }" class="pokemon-container-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/{{enemy.order}}.gif" (click)="gameStarted && !gameFinished ? dealDamage($event) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
+      <img [@bim]="pop" draggable="false" *ngIf="enemy" [ngClass]="{ defeated: enemy_life == 0 }" class="pokemon-container-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/{{enemy.order}}.gif" (click)="gameStarted && !gameFinished ? dealDamage($event) : ''" [class.disabled]="enemy_life === 0 || !gameStarted">
     </div>
 
     <div class="item-item">
@@ -22,17 +22,17 @@
 
   </div>
 
-  <div class="item">
+  <div class="item" style="position: absolute; bottom: 50%;">
     <!-- <img src="/assets/0.png"> -->
-    <button *ngIf="enemy_life < enemy.hp / 2" (click)="catch()">catch</button>
-    <button *ngIf="!gameStarted && !gameFinished" (click)="startGame()">Start</button>
+    <img class="pokeball" src="assets/poke-ball.png" *ngIf="(enemy_life < enemy.hp / 2) && !gameFinished" (click)="catch()">
+    <button style="transform: translateY(-80px);" *ngIf="!gameStarted && !gameFinished" (click)="startGame()">Start</button>
   </div>
 
 
   <div class="item" style="padding-right: 20%;">
 
     <div class="item-item" >
-      <img draggable="false" *ngIf="pokePlayer" class="pokemon-container-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/{{pokePlayer.order}}.gif">
+      <img [@popAnimation]="pop" draggable="false" *ngIf="pokePlayer" class="pokemon-container-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/back/{{pokePlayer.order}}.gif">
     </div>
 
     <div class="item-item">

@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { pokemonDTO } from 'src/app/shared/models/pokemonDTO';
 import { pokemonForm } from 'src/app/shared/models/pokemonForm';
+import { Trainer } from 'src/app/shared/models/trainer';
 import { LauncherService } from 'src/app/shared/services/launcher/launcher.service';
 import { PokemapperService } from 'src/app/shared/services/mapper/pokemapper.service';
 import { MemoryCardService } from 'src/app/shared/services/memory-card/memory-card.service';
@@ -61,6 +62,9 @@ endFightResult(event : any){
     this._pokeService.postPokemonForm(this._launcher.getUserToken, this.poke2)
     this.randomPokeList.splice(this.randomPokeList.indexOf(this.poke2), 1);
   }
+  let user : Trainer = this._launcher.getUser();
+  user.clic += this.clicInParent;
+  this._launcher.updateUser(user);
   this.fightResult = "";
   //this.poke2 = {} as any;
 }

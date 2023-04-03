@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate, state } from '@angular/animations';
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { pokemonForm } from 'src/app/shared/models/pokemonForm';
 import { PopService } from 'src/app/shared/services/popService/pop.service';
@@ -5,7 +6,19 @@ import { PopService } from 'src/app/shared/services/popService/pop.service';
 @Component({
   selector: 'app-click',
   templateUrl: './click.component.html',
-  styleUrls: ['./click.component.scss']
+  styleUrls: ['./click.component.scss'],
+  animations: [
+    trigger('popAnimation', [
+      transition('false => true', [
+        animate('50ms ease-out', style({ transform: 'translateY(-100px) translateX(100px)' })),
+      ])
+    ]),
+    trigger('bim', [
+      transition('false => true', [
+        animate('50ms ease-out', style({ transform: 'skewY(-10deg) skewX(-10deg)', filter: 'invert(1)'  })),
+      ])
+    ])
+  ]
 })
 export class ClickComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
@@ -18,6 +31,7 @@ export class ClickComponent implements OnInit, OnChanges, OnDestroy {
   // enemy_sprite! : string;
 
   clic : number = 0;
+  pop : boolean = false;
 
   @Output() clickEvent: EventEmitter<number> = new EventEmitter<number>();
   @Output() endFight: EventEmitter<string> = new EventEmitter<string>();
@@ -72,6 +86,14 @@ export class ClickComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   dealDamage($event: MouseEvent) {
+    if (this.pop)
+      this.pop = false
+    this.pop = true;
+    setTimeout(() => {
+      this.pop= false
+    }, 100);
+    // this.pop = false;
+
     let dmg = this.damageCalculator(); //Math.ceil(Math.random() * 16) + 1
     // console.log("dealDamage.dmg = "+dmg);
     this._popService.onClic($event, dmg.toPrecision(4));
@@ -95,7 +117,9 @@ export class ClickComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   catch() {
+    this.clickEvent.emit( this.clic );
     this.endFight.emit("catch");
+    this.clic = 0;
     this.gameStarted = false;
     this.gameFinished = true;
     clearInterval(this.timer);

@@ -5,7 +5,7 @@
       <img class="poke-sprite" [src]="getSprite">
     </div>
     <p *ngIf="pokemon">{{ pokemon.name.toUpperCase() }}</p>
-    <p>Lv. 19</p>
+    <p *ngIf="pokemon">#{{ pokemon.order }}</p>
 
 </div>
 

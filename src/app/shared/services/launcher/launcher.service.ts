@@ -16,8 +16,8 @@ export class LauncherService {
   }
 
   get isConnect() : boolean{
-    return this.isConnected;
-    //return localStorage.getItem('token') != undefined;
+    // return this.isConnected;
+    return localStorage.getItem('user') != undefined;
   }
 
   constructor( private _serv : MemoryCardService ) { }
@@ -25,6 +25,7 @@ export class LauncherService {
   signUp(form : any) : Trainer{
     this.connectedAs = this._serv.createUser(form)
     localStorage.setItem('token', this.connectedAs);
+    this.isConnected = true;
     return this._serv.getUser();
   }
 
@@ -43,6 +44,10 @@ export class LauncherService {
 
   getUser() : Trainer {
     return this._serv.getUser();
+  }
+
+  updateUser(user : Trainer) {
+    this._serv.updateUser(user);
   }
 
 
