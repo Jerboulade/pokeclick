@@ -27,8 +27,9 @@ export class ClickerComponent {
 
   getPokePlayer(){
     if (this.pokePlayerIndex > 0 && this.pokePlayerIndex < 1000)
-      this._pokeService.getPokemonDTOByOrder(this.pokePlayerIndex)?.subscribe({
-        next : (data : pokemonDTO) => {
+      this._pokeService.getPokemonDTOByOrder(this.pokePlayerIndex).subscribe({
+        next : (data : pokemonDTO | undefined) => {
+          if (!data) return;
           //this.player_sprite = data.sprites.front_default;
           this.pokePlayer = data;
         },
@@ -45,8 +46,9 @@ export class ClickerComponent {
 
   getPokeEnemy() {
     if (this.pokeEnemyIndex > 0 && this.pokeEnemyIndex < 1000)
-      this._pokeService.getPokemonDTOByOrder(this.pokeEnemyIndex)?.subscribe({
-        next : (data : pokemonDTO) => {
+      this._pokeService.getPokemonDTOByOrder(this.pokeEnemyIndex).subscribe({
+        next : (data : pokemonDTO | undefined) => {
+          if (!data) return;
           this.pokeEnemy = data;
         },
         error : (err : any) => {

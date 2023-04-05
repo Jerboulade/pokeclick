@@ -28,7 +28,8 @@ constructor(private _pokeService : PokeService, private _mapper : PokemapperServ
   this.poke = this.userPokemons[0];
 
   _pokeService.getPokemonDTOByOrder(Math.ceil(Math.random() * 650))?.subscribe({
-    next : (data : pokemonDTO) => {
+    next : (data : pokemonDTO | undefined) => {
+      if (!data) return;
       this.poke2 = _mapper.dtoToForm(data);
       this.randomPokeList.push(this.poke2);
 
@@ -39,8 +40,9 @@ constructor(private _pokeService : PokeService, private _mapper : PokemapperServ
     if (this.randomPokeList.length < 3){
       let rand : number = Math.ceil(Math.random() * 650);
     console.log(rand);
-    _pokeService.getPokemonDTOByOrder(rand)?.subscribe({
-      next : (data : pokemonDTO) => {
+    _pokeService.getPokemonDTOByOrder(rand).subscribe({
+      next : (data : pokemonDTO | undefined) => {
+        if (!data) return;
         this.randomPokeList.push(_mapper.dtoToForm(data));
       }
     })

@@ -45,14 +45,14 @@
 
 
       <div class="starter-container"  *ngIf="starterIsVisible && !formIsVisible">
-        <div (click)="submitStarter(0)" class="starter-item"><app-pokemon-card [pokemon]="starterItemList[0]"></app-pokemon-card></div>
+        <!-- <div (click)="submitStarter(0)" class="starter-item"><app-pokemon-card [pokemon]="starterItemList[0]"></app-pokemon-card></div>
         <div (click)="submitStarter(1)" class="starter-item"><app-pokemon-card [pokemon]="starterItemList[1]"></app-pokemon-card></div>
-        <div (click)="submitStarter(2)" class="starter-item"><app-pokemon-card [pokemon]="starterItemList[2]"></app-pokemon-card></div>
+        <div (click)="submitStarter(2)" class="starter-item"><app-pokemon-card [pokemon]="starterItemList[2]"></app-pokemon-card></div> -->
       </div>
 
 
       <div *ngIf="!starterIsVisible && !formIsVisible">
-        <app-pokemon-card [pokemon]="starter"></app-pokemon-card>
+        <!-- <app-pokemon-card [pokemon]="starter"></app-pokemon-card> -->
       </div>
     </div>
   </div>

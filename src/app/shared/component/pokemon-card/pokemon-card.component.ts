@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { pokeListItem } from '../../models/pokeListItem';
+import { pokemonDTO } from '../../models/pokemonDTO';
 import { PokeService } from '../../services/pokeService/poke.service';
 
 @Component({
@@ -10,21 +11,21 @@ import { PokeService } from '../../services/pokeService/poke.service';
 })
 export class PokemonCardComponent implements OnInit, OnChanges {
 @Input()
-pokemon! : pokeListItem;
+pokemon! : pokemonDTO;
 
 constructor(private _pokeservice : PokeService, private _http : HttpClient){
 
 
 }
   ngOnInit(): void {
-    if (this.pokemon) {
-      this._http.get<any>(this.pokemon.url).subscribe({
-        next : (data) => {
-          console.log(data);
-          this.sprite_url = data.sprites.front_default as string
-        }
-      });
-    }
+    // if (this.pokemon) {
+    //   this._http.get<any>(this.pokemon.url).subscribe({
+    //     next : (data) => {
+    //       console.log(data);
+    //       this.sprite_url = data.sprites.front_default as string
+    //     }
+    //   });
+    // }
   }
 
 
@@ -34,10 +35,10 @@ constructor(private _pokeservice : PokeService, private _http : HttpClient){
     }
   }
 
-sprite_url! : string;
+// sprite_url! : string;
 
 get getSprite() {
-  return this.sprite_url;
+  return this.pokemon.sprites.front_default;
 }
 /*pokemon : pokemonDTO = {
   order : 0,

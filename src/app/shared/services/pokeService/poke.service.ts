@@ -1,10 +1,10 @@
 import { Injectable, OnInit } from '@angular/core';
 import { MemoryCardService } from '../memory-card/memory-card.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { pokeListItem } from '../../models/pokeListItem';
 import { pokemonForm } from '../../models/pokemonForm';
 import { pokemonDTO } from '../../models/pokemonDTO';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map, Observable, Subject } from 'rxjs';
 import { Trainer } from '../../models/trainer';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class PokeService{
     console.log("init pokeservice");
     console.log("GET pokelist ");
     let i = 1;
-    this._http.get<any>(this.pokeURL + "pokemon?limit=650&offset=0").subscribe({
+    this._http.get<any>(this.pokeURL + "pokemon?limit=10&offset=0").subscribe({
       next : (data) => {
         this.pokeList = data.results as pokeListItem[],
         //console.log("res");
@@ -33,10 +33,18 @@ export class PokeService{
     console.log(this.pokeList[0]);
    }
 
+   getPagination(limit: number, offset: number): Observable<pokeListItem[]> {
+    const params = new HttpParams().appendAll({limit,offset});
+    return this._http.get<pokeListItem[]>(`${this.pokeURL}pokemon`, {params}).pipe(map((it: any) => it.results));
+   }
 
 
   get getList() : pokeListItem[] {
     return this.pokeList;
+  }
+
+  getPokemon(url: string): Observable<pokemonDTO> {
+    return this._http.get<pokemonDTO>(url);
   }
 
 
@@ -50,19 +58,28 @@ export class PokeService{
     return this.pokeList.find(item => item.order == order);
   }
 
-  getPokemonDTOByOrder(order : number) : pokemonDTO | Observable<pokemonDTO> | undefined {
-    if ( order <= 0 || order > 650)
-      return ;
-    console.log("order in getPokemonDTOByOrder : "+ order);
-    let pokemon : pokemonDTO | undefined = this.pokedex.find( pk => pk.order == order );
-    if (!pokemon){
-      //console.log("url in getPokemonDTOByOrder : "+ this.pokeURL + "pokemon/" + order);
-      return this._http.get<pokemonDTO>(this.pokeURL + "pokemon/" + order)
-    }
-    else
-      console.log("founded in pokedex")
-    console.log(pokemon);
-    return (pokemon);
+  // private pokemon$ = new BehaviorSubject<pokemonDTO | undefined>( undefined );
+
+  getPokemonDTOByOrder(order : number) : Observable<pokemonDTO> {
+    // if ( order <= 0 || order > 650)
+    //   return ;
+    // console.log("order in getPokemonDTOByOrder : "+ order);
+    // let pokemon : pokemonDTO | undefined = this.pokedex.find( pk => pk.order == order );
+    // if (!pokemon){
+    //   //console.log("url in getPokemonDTOByOrder : "+ this.pokeURL + "pokemon/" + order);
+    //   return this._http.get<pokemonDTO>(this.pokeURL + "pokemon/" + order)
+    // }
+    // else
+    //   console.log("founded in pokedex")
+    // console.log(pokemon);
+    // return (pokemon);
+
+    // const pokemon = this.pokedex.find(pk => pk.order == order);
+    // if(pokemon) {
+    //   this.pokemon$.next(pokemon);
+    // } else {
+      return this._http
+        .get<pokemonDTO>(`${this.pokeURL}pokemon/${order}`)
   }
 
   postPokemonForm( token : string, form : pokemonForm ){
@@ -81,3 +98,4 @@ export class PokeService{
      return this._serv.getUserActivePokemon(userToken);
   }
 }
+

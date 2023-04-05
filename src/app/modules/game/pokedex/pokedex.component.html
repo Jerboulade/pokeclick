@@ -2,7 +2,7 @@
 <div class="component-container">
   <div class="pokedex_container">
     <div *ngFor="let p of pokeList">
-      <app-pokemon-card *ngIf="p.order < offset" [pokemon]="p"></app-pokemon-card>
+      <app-pokemon-card [pokemon]="p"></app-pokemon-card>
     </div>
 
   </div>

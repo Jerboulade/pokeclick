@@ -74,7 +74,6 @@ export class pokemonForm{
     console.log(this.xp);
   }
 
-
   get getId() {
     return this.id;
   }
@@ -95,21 +94,25 @@ export class pokemonForm{
     if (this.hp_EV > 65535)
       this.hp_EV = 65535;
   }
+
   set setEV_atk(value : number){
     this.atk_EV += value;
     if (this.atk_EV > 65535)
     this.atk_EV = 65535;
   }
+
   set setEV_def(value : number){
     this.def_EV += value;
     if (this.def_EV > 65535)
     this.def_EV = 65535;
   }
+
   set setEV_spd(value : number){
     this.spd_EV += value;
     if (this.spd_EV > 65535)
     this.spd_EV = 65535;
   }
+
   set setEV_spec(value : number){
     this.spec_EV += value;
     if (this.spec_EV > 65535)
